@@ -24,7 +24,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
         }}
       />
-      <BottomTab.Screen
+      <BottomTab.Screen  
         name="Links"
         component={LinksScreen}
         options={{

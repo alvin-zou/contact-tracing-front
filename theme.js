@@ -12,12 +12,12 @@ const theme = {
         fonts: {
             light: '',
             medium: '',
-            dark: '',
+            dark: '#000000',
         },
     },
     fonts: {
         titles: 'Rockwell',
-        secondary: '',
+        secondary: 'DIN Alternate',
     },
   }
   
