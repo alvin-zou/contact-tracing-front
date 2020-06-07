@@ -5,6 +5,8 @@ import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
 import { MonoText } from '../components/StyledText';
 
+const status = "quarantined"; // safe, limited, restricted, quarantined
+
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
@@ -12,11 +14,31 @@ export default function HomeScreen() {
 
         <View style={styles.getStartedContainer}>
 
-          <Text style={styles.welcomeText}>
-            welcome
+          <View style={styles.imageContainer}>
+            <Image style={styles.image} source={require(
+              status==="safe" ? '../assets/images/Safe.png' : 
+              (status==="limited" ? '../assets/images/LimitContact.png' : 
+              (status==="restricted" ? '../assets/images/StayHome.png' : 
+              (status==="quarantined" ? '../assets/images/Quarantine.png' : 'black'))))} />
+          </View>
+
+          <Text style={styles.titleText}>
+            {status==="safe" ? `safe` : 
+              (status==="limited" ? `limit contact` : 
+              (status==="restricted" ? `stay home` : 
+              (status==="quarantined" ? `self-isolate` : 'black')))}
           </Text>
           <Text style={styles.subText}>
-            JUST A QUICK SURVEY TO GET STARTED
+            {status==="safe" ? `YOUR INTERACTION COUNT IS WELL BELOW THE DAILY LIMIT.` : 
+              (status==="limited" ? `YOUR INTERACTION COUNT IS APPROACHING THE DAILY LIMIT.` : 
+              (status==="restricted" ? `YOUR INTERACTION COUNT HAS REACHED THE DAILY LIMIT.` : 
+              (status==="quarantined" ? `YOU'VE BEEN QUARANTINED DUE TO COVID-19 EXPOSURE.` : 'black')))}
+          </Text>
+          <Text style={styles.subText}>
+            {status==="safe" ? `THANKS FOR KEEPING HARVARD HEALTHY.` : 
+              (status==="limited" ? `PRACTICE SOCIAL DISTANCING WHEREVER POSSIBLE.` : 
+              (status==="restricted" ? `STAY HOME.\n STOP THE SPREAD.` : 
+              (status==="quarantined" ? `AVOID NON-ESSENTIAL INTERACTIONS.` : 'black')))}
           </Text>
 
         </View>
@@ -44,7 +66,10 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: status==="safe" ? theme.colors.primary.safe : 
+      (status==="limited" ? theme.colors.primary.limited : 
+      (status==="restricted" ? theme.colors.primary.restricted : 
+      (status==="quarantined" ? theme.colors.primary.quarantined : 'black'))),
   },
   contentContainer: {
     paddingTop: 30,
@@ -56,23 +81,38 @@ const styles = StyleSheet.create({
   },
   getStartedContainer: {
     alignItems: 'center',
-    marginHorizontal: 50,
+    marginHorizontal: status==="quarantined" ? 23 : 15,
   },
-  welcomeText: {
+  imageContainer: {
+    alignItems: 'center',
+    paddingTop: '0%',
+    width: '10%',
+    height: '10%',
+    color: theme.colors.primary.background,
+  },
+  image: {
+    flex: 1,
+    width: 250,
+    height: 250,
+    resizeMode: 'contain',
+  },
+  titleText: {
     fontSize: 60,
     fontWeight: 'bold',
-    paddingTop: '80%',
-    color: theme.colors.primary.safe,
+    paddingTop: status==="quarantined" ? '58%' : '55%',
+    color: theme.colors.primary.background,
     fontFamily: theme.fonts.titles,
     textAlign: 'center',
+    letterSpacing: 3,
   },
   subText: {
     fontSize: 26,
-    paddingLeft: '10%',
-    paddingRight: '10%',
-    color: theme.colors.fonts.dark,
+    paddingTop: (status==="safe")||(status==="restricted") ? '15%' : '5%',
+    color: theme.colors.primary.background,
     fontFamily: theme.fonts.secondary,
     textAlign: 'center',
+    letterSpacing: 3,
+    marginHorizontal: status==="restricted" ? 10 : 8,
   },
   tabBarInfoContainer: {
     position: 'absolute',
