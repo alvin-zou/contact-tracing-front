@@ -65,14 +65,14 @@ const styles = StyleSheet.create({
     color: theme.colors.primary.safe,
     fontFamily: theme.fonts.titles,
     textAlign: 'center',
+    letterSpacing: 3,
   },
   subText: {
     fontSize: 26,
-    paddingLeft: '10%',
-    paddingRight: '10%',
     color: theme.colors.fonts.dark,
     fontFamily: theme.fonts.secondary,
     textAlign: 'center',
+    letterSpacing: 3,
   },
   tabBarInfoContainer: {
     position: 'absolute',
