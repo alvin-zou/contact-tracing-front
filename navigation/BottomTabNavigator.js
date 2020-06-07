@@ -3,7 +3,11 @@ import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import StatsScreen from '../screens/StatsScreen';
+import HealthScreen from '../screens/HealthScreen';
+import MessagesScreen from '../screens/MessagesScreen';
+import MenuScreen from '../screens/MenuScreen';
+
 
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
@@ -20,16 +24,40 @@ export default function BottomTabNavigator({ navigation, route }) {
         name="Home"
         component={HomeScreen}
         options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'Home',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />, // https://infinitered.github.io/ionicons-version-3-search/
         }}
       />
       <BottomTab.Screen  
-        name="Links"
-        component={LinksScreen}
+        name="Stats"
+        component={StatsScreen}
         options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: 'Statistics',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-stats" />,
+        }}
+      />
+      <BottomTab.Screen  
+        name="Health"
+        component={HealthScreen}
+        options={{
+          title: 'Health',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-medkit" />,
+        }}
+      />
+      <BottomTab.Screen  
+        name="Messages"
+        component={MessagesScreen}
+        options={{
+          title: 'Messages',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-megaphone" />,
+        }}
+      />
+      <BottomTab.Screen  
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          title: 'Menu',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-menu" />,
         }}
       />
     </BottomTab.Navigator>
