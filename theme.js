@@ -18,8 +18,8 @@ const theme = {
         },
     },
     fonts: {
-        titles: 'Rockwell',
-        secondary: 'DIN Alternate',
+        titles: '', // 'Rockwell'
+        secondary: '', // 'DIN Alternate'
     },
   }
   
