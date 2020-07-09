@@ -3,28 +3,64 @@ import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
+import theme from '../theme.js';
 
-export default function HealthScreen() {
+export default function SymptomScreen() {
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <View style={styles.contentContainer}>
+        <Text style={styles.welcomeText}>
+          unwell?
+        </Text>
+        <Text style={styles.subText}>
+          LET US KNOW
+        </Text>
+      </View>
       <OptionButton
-        icon="md-school"
-        label="Read the Expo documentation"
+        icon="fever-chills"
+        label="FEVER OR CHILLS"
+        // highlight ??
         onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
       />
 
       <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
+        icon="cough"
+        label="COUGH"
         onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
       />
 
       <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
+        icon="short-of-breath"
+        label="SHORT OF BREATH"
         onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
         isLastOption
       />
+
+      <OptionButton
+        icon="fatigue"
+        label="FATIGUE"
+        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+      />
+
+      <OptionButton
+        icon="other"
+        label="OTHER"
+        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+      />
+
+      {/* needs padding */}
+      <OptionButton
+        icon="report-symptoms"
+        label="REPORT SYMPTOMS"
+        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+      />
+
+      <View style={styles.contentContainer}>
+        <Text style={styles.welcomeText}>
+          contacts
+        </Text>
+      </View>
     </ScrollView>
   );
 }
@@ -50,7 +86,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   contentContainer: {
-    paddingTop: 15,
+    paddingVertical: 0,
+  },
+  getStartedContainer: {
+    paddingTop: 0,
+    alignItems: 'center',
+  },
+  welcomeText: {
+    fontSize: 60,
+    fontWeight: 'bold',
+    paddingTop: '20%',
+    color: theme.colors.primary.safe,
+    fontFamily: theme.fonts.titles,
+    textAlign: 'center',
+    letterSpacing: 3,
+  },
+  subText: {
+    fontSize: 26,
+    color: theme.colors.fonts.dark,
+    fontFamily: theme.fonts.secondary,
+    textAlign: 'center',
+    letterSpacing: 3,
+    paddingBottom: 30
   },
   optionIconContainer: {
     marginRight: 12,
@@ -68,7 +125,8 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 15,
+    justifyContent: 'center',
     alignSelf: 'flex-start',
-    marginTop: 1,
-  },
+    marginTop: 1
+  }
 });
