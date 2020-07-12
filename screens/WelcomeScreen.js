@@ -1,30 +1,67 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Animated, Easing } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+export default class HomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fadeFirstText: new Animated.Value(1),
+      fadeSecondText: new Animated.Value(0),
+    }
+  }
 
-        <View style={styles.getStartedContainer}>
+  fadeIn = anim => Animated.timing(anim, {
+    toValue: 1, duration: 1000,
+  }).start();
 
-          <Text style={styles.welcomeText}>
-            welcome
-          </Text>
-          <Text style={styles.subText}>
-            JUST A QUICK SURVEY TO GET STARTED
-          </Text>
+  fadeOut = (anim, fn) => Animated.timing(anim, {
+    toValue: 0, duration: 1000,
+  }).start(fn);
 
-        </View>
+  componentDidMount() {
+    this.animate();
+  }
 
-      </ScrollView>
+  animate() {
+    Animated.timing(this.state.fadeFirstText, {
+      toValue: 1, duration: 3000, /* <--- modify for initial text time */
+    }).start(({ finished }) => {
+      this.fadeOut(this.state.fadeFirstText, ({ finished }) => {
+        this.fadeIn(this.state.fadeSecondText);
+      });
+    });
+  }
 
-    </View>
-  );
+  render() {
+    return (
+      <View style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
+          <View style={styles.getStartedContainer}>
+
+            <Text style={styles.welcomeText}>
+              welcome
+            </Text>
+            <View style={{ alignItems: 'center' }}>
+              <Animated.Text style={[styles.subText, { opacity: this.state.fadeFirstText, }]}>
+                JUST A QUICK SURVEY TO GET STARTED
+              </Animated.Text>
+              <Animated.Text style={[styles.subText, { opacity: this.state.fadeSecondText }]}>
+                YOU CAN UPDATE YOUR RESPONSES AT ANY TIME
+              </Animated.Text>
+            </View>
+
+          </View>
+
+        </ScrollView>
+
+      </View>
+    );
+  }
 }
 
 HomeScreen.navigationOptions = {
@@ -59,7 +96,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
   },
   welcomeText: {
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: 'bold',
     paddingTop: '80%',
     color: theme.colors.primary.safe,
@@ -73,6 +110,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.secondary,
     textAlign: 'center',
     letterSpacing: 3,
+    position: 'absolute',
   },
   tabBarInfoContainer: {
     position: 'absolute',
