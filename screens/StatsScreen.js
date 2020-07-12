@@ -1,5 +1,5 @@
 import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
+import React, { Component } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
@@ -8,6 +8,9 @@ import { Dimensions, TouchableHighlight } from 'react-native';
 import { MonoText } from '../components/StyledText';
 
 const status = "safe"; // safe, limited, restricted, quarantined
+const chart_wh = 250
+const series = [123, 321, 123, 789, 537]
+const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
 
 statusColor = (status==="safe" ? theme.colors.primary.safe : 
 (status==="limited" ? theme.colors.primary.limited : 
@@ -27,6 +30,7 @@ export default function StatsScreen() {
           <Text style={styles.subText}>
             TODAY'S CONTACTS
           </Text>
+
           <TouchableHighlight
       style = {{
         borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
@@ -41,6 +45,10 @@ export default function StatsScreen() {
     >
       <Text> Mom, look, I am a circle! </Text>
     </TouchableHighlight>
+
+
+
+
           <Text style={styles.subText}>
             WEEKLY STATISTICS
           </Text>
@@ -103,7 +111,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 60,
     fontWeight: 'bold',
-    paddingTop: status==="quarantined" ? '58%' : '55%',
+    paddingTop: '5%',
     color: statusColor,
     fontFamily: theme.fonts.titles,
     textAlign: 'center',
@@ -111,7 +119,7 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: 26,
-    paddingTop: (status==="safe")||(status==="restricted") ? '15%' : '5%',
+    paddingTop: '0%',
     color: theme.colors.fonts.dark,
     fontFamily: theme.fonts.secondary,
     textAlign: 'center',
