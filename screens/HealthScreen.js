@@ -1,10 +1,28 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
-// import ToggleButtonGroup from 'react-bootstrap/ToggleButtonGroup'
 import theme from '../theme.js';
+
+class ToggleButton extends React.Component {
+
+  render() {
+    return (
+      <TouchableHighlight underlayColor='red' style={styles.container} onPress={this.props.onPress}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={styles.optionIconContainer}>
+            <Ionicons size={22} color="rgba(0,0,0,0.35)" />
+          </View>
+          <View style={styles.optionTextContainer}>
+            <Text style={styles.optionText}>{this.props.label}</Text>
+          </View>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+}
+
 
 export default function SymptomScreen() {
   return (
@@ -17,41 +35,43 @@ export default function SymptomScreen() {
           LET US KNOW
         </Text>
       </View>
+      <ToggleButton label='test' />
+
       <OptionButton
-        icon="fever-chills"
+        // icon="fever-chills"
         label="FEVER OR CHILLS"
         // highlight ??
         onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
       />
 
       <OptionButton
-        icon="cough"
+        // icon="cough"
         label="COUGH"
         onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
       />
 
       <OptionButton
-        icon="short-of-breath"
+        // icon="short-of-breath"
         label="SHORT OF BREATH"
         onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
         isLastOption
       />
 
       <OptionButton
-        icon="fatigue"
+        // icon="fatigue"
         label="FATIGUE"
         onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
       />
 
       <OptionButton
-        icon="other"
+        // icon="other"
         label="OTHER"
         onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
       />
 
       {/* needs padding */}
       <OptionButton
-        icon="report-symptoms"
+        // icon="report-symptoms"
         label="REPORT SYMPTOMS"
         onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
       />
