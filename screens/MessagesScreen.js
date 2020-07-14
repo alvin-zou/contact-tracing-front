@@ -1,74 +1,211 @@
-import { Ionicons } from '@expo/vector-icons';
 import * as WebBrowser from 'expo-web-browser';
-import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import { Ionicons } from '@expo/vector-icons';
+import React, {useState} from 'react';
+import { Button, Image, Platform, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+import theme from '../theme.js';
+// import { MonoText } from '../components/StyledText';
 
-export default function MessagesScreen() {
-  return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-      <OptionButton
-        icon="md-school"
-        label="Read the Expo documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
-      />
 
-      <OptionButton
-        icon="md-compass"
-        label="Read the React Navigation documentation"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
-      />
+export default function MessagesScreen({navigation}) {
 
-      <OptionButton
-        icon="ios-chatboxes"
-        label="Ask a question on the forums"
-        onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
-        isLastOption
-      />
-    </ScrollView>
-  );
-}
+  const messages = [
+    {read: false, title: "STATUS UPDATE: END QUARANTINE", message: "YOU'RE NO LONGER SHOWING ELEVATED LEVELS OF EXPOSURE TO COVID-19. WHILE YOU NEED NOT CONTINUE TO QUARANTINE, IT IS ADVISED THAT YOU CONTINUE TO PRACTICE SOCIAL DISTANCING."},
+    {read: false, title: "UPDATE ON SOCIAL DISTANCING", message: "DEAR STUDENTS, DUE TO THE SUCCESS OF OUR CONTACT TRACING EFFORTS, WE'RE NOW ALLOWING IN-PERSON CLASSES WITH AT MOST 20 STUDENTS EACH."},
+    {read: true, title: "WELCOME BACK", message: "DEAR STUDENTS, WELCOME BACK TO HARVARD! WE KNOW THAT THIS SEMESTER WILL LOOK VERY DIFFERENT FROM WHAT..."},
+  ];
 
-function OptionButton({ icon, label, onPress, isLastOption }) {
-  return (
-    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
-      <View style={{ flexDirection: 'row' }}>
-        <View style={styles.optionIconContainer}>
-          <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
-        </View>
-        <View style={styles.optionTextContainer}>
-          <Text style={styles.optionText}>{label}</Text>
-        </View>
+
+  const dotStyle = (read) => {
+    if (!read) {
+      return {height: 17, width: 17, backgroundColor: theme.colors.primary.safe, borderRadius: 17 / 2, marginLeft: 10}      
+    }
+    return {height: 17, width: 17, backgroundColor: "white", borderRadius: 17 / 2, marginLeft: 10}      
+  };
+
+  const showMessages = messages.map( (message, index) => 
+    <View key={index} style={{flex: 1}}>
+      <View style={{flexDirection: "row", alignItems: "center"}}>
+        <View style={dotStyle(message.read)}></View>
+        <Text style={styles.messageTitleText}>{message.title}</Text>
       </View>
-    </RectButton>
+      <Text style={styles.messageText}>{message.message}</Text>
+      <View style={{width: "100%", height: 1, marginBottom: 10, marginTop: 10, backgroundColor: 'black',}}></View>
+    </View>
+  );
+
+  // const showOneMessage = () => {
+  //   const message = messages[0];
+  //   return <View style={{flex: 1}}>
+  //   <View style={{width: "100%", height: 1, marginBottom: 10, marginTop: 10, backgroundColor: 'black',}}></View>
+  //   <Text style={styles.messageTitleTextOne}>{message.title}</Text>
+  //   <Text style={styles.messageTextOne}>{message.message}</Text>
+  //   <View style={{alignItems: "center", marginTop: 30}}>
+  //     <Button title="Go back" onPress={() => {setShowAllMessages(true); changeMessage();}} style={{alignSelf: "center"}}></Button>
+  //   </View>
+  // </View>
+  // }
+
+
+  return (
+    <View style={styles.container}>
+
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.initialText}>
+          <Text style={styles.titleText}>
+                inbox
+              </Text>
+
+          {/* <Button title="test" onPress = {() => navigation.navigate("Campus")} /> */}
+        </View>
+        
+      
+          <View> 
+          <View style={{width: "100%", height: 1, marginBottom: 10, marginTop: 10, backgroundColor: 'black',}}></View>
+          {showMessages} 
+          </View>
+        
+        
+      </ScrollView>
+
+    </View>
   );
 }
+
+// HomeScreen.navigationOptions = {
+//   header: null,
+// };
+
+// function handleLearnMorePress() {
+//   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
+// }
+
+// function handleHelpPress() {
+//   WebBrowser.openBrowserAsync(
+//     'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+//   );
+// }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fafafa',
+    backgroundColor: "white",    
+
   },
   contentContainer: {
-    paddingTop: 15,
+    paddingTop: 30,
+    justifyContent: "flex-start",
   },
-  optionIconContainer: {
-    marginRight: 12,
+
+  initialText: {
+    flex: 1,
+    alignItems: "center",
   },
-  option: {
-    backgroundColor: '#fdfdfd',
-    paddingHorizontal: 15,
-    paddingVertical: 15,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderBottomWidth: 0,
-    borderColor: '#ededed',
+  
+  titleText: {
+    fontSize: 60,
+    fontWeight: 'bold',
+    paddingTop: '5%',
+    color: theme.colors.primary.safe,
+    fontFamily: theme.fonts.titles,
+    letterSpacing: 3,
   },
-  lastOption: {
-    borderBottomWidth: StyleSheet.hairlineWidth,
+  subText: {
+    fontSize: 26,
+    // paddingTop: '15%',
+    color: "black",
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 3,
+    marginHorizontal:  8,
   },
-  optionText: {
+  imageContainer: {
+    paddingTop: '10%',
+    paddingLeft: "5%",
+    flex: 1,
+    color: theme.colors.primary.background,
+    height: 135,
+    width: 115,
+  },
+  image: {
+    justifyContent: "flex-start",
+    width: 75,
+    height: 75,
+    borderColor: "orange",
+    borderWidth: 5,
+    borderRadius: 75 / 2,
+  },
+  messageTitleText: {
+    fontSize: 18,
+    color: "black",
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 1,
+    marginLeft: 10,
+
+  },
+  messageText: {
+    fontSize: 14,
+    color: "gray",
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 1,
+    marginLeft: 40,
+    marginRight: 20,
+  },
+  messageTitleTextOne: {
+    fontSize: 18,
+    color: "black",
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 1,
+    marginLeft: 20,
+    marginRight: 20,
+    marginTop: 10,
+  },
+  messageTextOne: {
     fontSize: 15,
-    alignSelf: 'flex-start',
-    marginTop: 1,
+    color: "gray",
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 1,
+    marginTop: 20,
+    marginLeft: 20,
+    marginRight: 20,
+  },
+  infoText: {
+    fontSize: 20,
+    color: theme.colors.primary.background,
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 3,
+    textDecorationLine: "underline",
+    left: 10,
+    top: 1,
+  },
+  info: {
+    bottom: 20,
+    left: 10,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+  },
+  tabBarInfoContainer: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    ...Platform.select({
+      ios: {
+        shadowColor: 'black',
+        shadowOffset: { width: 0, height: -3 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 20,
+      },
+    }),
+    alignItems: 'center',
+    backgroundColor: '#fbfbfb',
+    paddingVertical: 20,
+  },
+  tabBarInfoText: {
+    fontSize: 17,
+    color: 'rgba(96,100,109, 1)',
+    textAlign: 'center',
   },
 });
