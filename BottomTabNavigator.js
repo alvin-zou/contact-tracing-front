@@ -47,10 +47,10 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen  
-        name="Health"
-        component={HealthScreen}
+        name="Campus"
+        component={CampusScreen}
         options={{
-          title: 'Health',
+          title: 'Campus',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-medkit" />,
         }}
       />
