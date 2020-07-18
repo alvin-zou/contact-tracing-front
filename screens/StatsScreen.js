@@ -3,14 +3,40 @@ import React, { Component } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
-import PieChart from 'react-native-pie-chart';
+import Svg, { Circle, Path } from 'react-native-svg';
 import { Dimensions, TouchableHighlight } from 'react-native';
 import { MonoText } from '../components/StyledText';
 
 const status = "safe"; // safe, limited, restricted, quarantined
-const chart_wh = 250
-const series = [123, 321, 123, 789, 537]
-const sliceColor = ['#F44336','#2196F3','#FFEB3B', '#4CAF50', '#FF9800']
+
+
+
+
+
+function getCoordinatesForPercent(percent) {
+  const x = Math.cos(2 * Math.PI * percent);
+  const y = Math.sin(2 * Math.PI * percent);
+  
+  return [x, y];
+}
+
+const percent = 0.12;
+
+const startX = getCoordinatesForPercent(0)[0];
+const startY = getCoordinatesForPercent(0)[1];
+const endX = getCoordinatesForPercent(percent)[0];
+const endY = getCoordinatesForPercent(percent)[1];
+
+const largeArcFlag = percent > .5 ? 1 : 0;
+
+const pathData = [
+  `M ${startX} ${startY}`,
+  `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
+  `L 0 0`,
+].join(' ');
+
+
+
 
 statusColor = (status==="safe" ? theme.colors.primary.safe : 
 (status==="limited" ? theme.colors.primary.limited : 
@@ -31,23 +57,12 @@ export default function StatsScreen() {
             TODAY'S CONTACTS
           </Text>
 
-          <TouchableHighlight
-      style = {{
-        borderRadius: Math.round(Dimensions.get('window').width + Dimensions.get('window').height) / 2,
-        width: Dimensions.get('window').width * 0.5,
-        height: Dimensions.get('window').width * 0.5,
-        backgroundColor:'#f00',
-        justifyContent: 'center',
-        alignItems: 'center'
-      }}
-      underlayColor = '#ccc'
-      onPress = { () => alert('Yaay!') }
-    >
-      <Text> Mom, look, I am a circle! </Text>
-    </TouchableHighlight>
+          <Svg height="100%" width="100%">
+            <Path d="M100 0 A100 100 0 0 1 100 200 A100 100 0 0 1 100 0" fill={theme.colors.fonts.light}/>
+            <Path d="M100 0 A100 100 0 0 1 200 100 L100 100" fill={statusColor}/>
+            <Path d="M100 40 A60 60 0 0 1 100 160 A60 60 0 0 1 100 40" fill={theme.colors.primary.background}/>
 
-
-
+          </Svg>
 
           <Text style={styles.subText}>
             WEEKLY STATISTICS

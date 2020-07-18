@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
 import { MonoText } from '../components/StyledText';
 
-export default class HomeScreen extends React.Component {
+export default class WelcomeScreen extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -64,7 +64,7 @@ export default class HomeScreen extends React.Component {
   }
 }
 
-HomeScreen.navigationOptions = {
+WelcomeScreen.navigationOptions = {
   header: null,
 };
 

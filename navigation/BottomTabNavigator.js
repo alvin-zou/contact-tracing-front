@@ -7,6 +7,8 @@ import StatsScreen from '../screens/StatsScreen';
 import HealthScreen from '../screens/HealthScreen';
 import MessagesScreen from '../screens/MessagesScreen';
 import MenuScreen from '../screens/MenuScreen';
+import CampusScreen from '../screens/CampusScreen';
+import WelcomeScreen from '../screens/WelcomeScreen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -22,7 +24,7 @@ export default function BottomTabNavigator({ navigation, route }) {
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name="Home"
-        component={HomeScreen}
+        component={WelcomeScreen}
         options={{
           title: 'Home',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />, // https://infinitered.github.io/ionicons-version-3-search/
@@ -37,10 +39,10 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen  
-        name="Health"
-        component={HealthScreen}
+        name="Campus"
+        component={CampusScreen}
         options={{
-          title: 'Health',
+          title: 'Campus',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-medkit" />,
         }}
       />
