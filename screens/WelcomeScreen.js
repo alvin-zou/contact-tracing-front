@@ -14,9 +14,9 @@ export default class WelcomeScreen extends React.Component {
     }
   }
 
-  fadeIn = anim => Animated.timing(anim, {
+  fadeIn = (anim, fn) => Animated.timing(anim, {
     toValue: 1, duration: 1000,
-  }).start();
+  }).start(fn);
 
   fadeOut = (anim, fn) => Animated.timing(anim, {
     toValue: 0, duration: 1000,
@@ -31,7 +31,13 @@ export default class WelcomeScreen extends React.Component {
       toValue: 1, duration: 3000, /* <--- modify for initial text time */
     }).start(({ finished }) => {
       this.fadeOut(this.state.fadeFirstText, ({ finished }) => {
-        this.fadeIn(this.state.fadeSecondText);
+        this.fadeIn(this.state.fadeSecondText, ({ finished }) => {
+          Animated.timing(this.state.fadeSecondText, {
+            toValue: 1, duration: 3000,
+          }).start(({ finished }) => {
+            this.props.navigation.replace('Root', true)
+          });
+        });
       });
     });
   }

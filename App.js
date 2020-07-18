@@ -7,6 +7,8 @@ import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 
+import WelcomeScreen from './screens/WelcomeScreen';
+
 const Stack = createStackNavigator();
 
 export default function App(props) {
@@ -17,10 +19,11 @@ export default function App(props) {
   } else {
     return (
       <View style={styles.container}>
-        {/* {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}*/ }
+        {/* {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}*/}
         <NavigationContainer linking={LinkingConfiguration}>
-          <Stack.Navigator>
+          <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Root" component={BottomTabNavigator} />
+            <Stack.Screen name="Welcome" component={WelcomeScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </View>
