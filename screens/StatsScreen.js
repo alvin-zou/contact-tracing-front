@@ -1,77 +1,130 @@
-import * as WebBrowser from 'expo-web-browser';
+// import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
-import Svg, { Circle, Path } from 'react-native-svg';
-import { Dimensions, TouchableHighlight } from 'react-native';
-import { MonoText } from '../components/StyledText';
+// import Svg, { Circle, Path } from 'react-native-svg';
+// import { Dimensions, TouchableHighlight } from 'react-native';
+// import { MonoText } from '../components/StyledText';
 
-const status = "safe"; // safe, limited, restricted, quarantined
+// const status = "safe"; // safe, limited, restricted, quarantined
+
+const status = "safe";
+const statusColor = theme.colors.primary.safe;
 
 
+// statusColor = (status==="safe" ? theme.colors.primary.safe : 
+// (status==="limited" ? theme.colors.primary.limited : 
+// (status==="restricted" ? theme.colors.primary.restricted : 
+// (status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
 
+// rec = recommended number of contacts; act = actual number of contacts; first entry = 4 days ago, second entry = 3 days ago, etc.
+const contacts = [
+  {rec: 35, act: 10},
+  {rec: 30, act: 25},
+  {rec: 25, act: 15},
+  {rec: 20, act: 10},
+  {rec: 15, act: 10},
+  {rec: 10, act: 13},
+  {rec: 10, act: 2}
+];
 
-
-function getCoordinatesForPercent(percent) {
-  const x = Math.cos(2 * Math.PI * percent);
-  const y = Math.sin(2 * Math.PI * percent);
-  
-  return [x, y];
+let max = 0;
+for (let i = 0; i < 5; i++) {
+  if (contacts[i].rec > max) {
+    max = contacts[i].rec;
+  }
+  if (contacts[i].act > max) {
+    max = contacts[i].act;
+  }
 }
 
-const percent = 0.12;
+const maxScore = Math.ceil((max) / 10) * 10;
 
-const startX = getCoordinatesForPercent(0)[0];
-const startY = getCoordinatesForPercent(0)[1];
-const endX = getCoordinatesForPercent(percent)[0];
-const endY = getCoordinatesForPercent(percent)[1];
+const scoreLabels = Array.from([4,3,2,1,0], x => x*(maxScore / 4));
 
-const largeArcFlag = percent > .5 ? 1 : 0;
+const getHeight = (score) => {
+    return 27.5 * (score / (maxScore / 4) );
+};
 
-const pathData = [
-  `M ${startX} ${startY}`,
-  `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
-  `L 0 0`,
-].join(' ');
+const startDay = 3; // 0 = MON, 1 = TUE, ETC.
+const weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN']; 
+
+const weekDaysDisplay = [];
+for (let i = 0; i < 7; i++) {
+  weekDaysDisplay.push(weekDays[(startDay + i) % 7]);  
+}
 
 
+const getColor = (act, rec) => {
+  if (act > rec) {
+    return theme.colors.primary.restricted;
+  }
+  if (act > 0.75 * rec) {
+    return theme.colors.primary.limited;
+  }
+  return theme.colors.primary.safe;
+}
 
+const displayDates = contacts.map( (contact, index) => 
+<View key={index} style={{position: "absolute", top: 135, left: 75 + index * 40, alignItems: "center", flexDirection: "column-reverse"}}>
+  {/* <View style={{width: 25, height: 130, backgroundColor: 'white', }}></View> */}
+  <View style={{width: 20, height: getHeight(contact.rec), backgroundColor: 'gainsboro', position: "absolute"}}></View>
+  <View style={{width: 20, height: getHeight(contact.act), backgroundColor: getColor(contact.act, contact.rec), position: "absolute"}}></View>
+  <Text style={{top: 5, fontSize: 15, color: "black", fontFamily: theme.fonts.secondary,  position: "absolute"}}>{weekDaysDisplay[index]}</Text>
+</View>
+);
 
-statusColor = (status==="safe" ? theme.colors.primary.safe : 
-(status==="limited" ? theme.colors.primary.limited : 
-(status==="restricted" ? theme.colors.primary.restricted : 
-(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
+const displayScale = scoreLabels.map( (scale, index) =>
+<View key={index} style={{position: "absolute", top: 175 + index * 27, left: "87%", alignItems: "center", flexDirection: "column"}}>
+  {/* <View style={{width: 25, height: 130, backgroundColor: 'white', }}></View> */}
+  <Text style={{top: 5, fontSize: 15, color: "black", fontFamily: theme.fonts.secondary}}>{scale}</Text>
+</View>
+);
+
 
 export default function StatsScreen() {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 
-        <View style={styles.getStartedContainer}>
 
-          <Text style={styles.titleText}>
-            stats
-          </Text>
-          <Text style={styles.subText}>
-            TODAY'S CONTACTS
-          </Text>
-
-          <Svg height="100%" width="100%">
-            <Path d="M100 0 A100 100 0 0 1 100 200 A100 100 0 0 1 100 0" fill={theme.colors.fonts.light}/>
-            <Path d="M100 0 A100 100 0 0 1 200 100 L100 100" fill={statusColor}/>
-            <Path d="M100 40 A60 60 0 0 1 100 160 A60 60 0 0 1 100 40" fill={theme.colors.primary.background}/>
-
-          </Svg>
+          <View style={styles.initialText}>
+            <Text style={styles.titleText}>
+              personal
+            </Text>
+          </View>
 
           <Text style={styles.subText}>
             WEEKLY STATISTICS
           </Text>
+
+          
+
+            <View style={{alignItems: "center", flex: 1, height: 300, flexDirection: "column"}}>
+
+              <View style={{width: 2, height: 125, backgroundColor: 'black', top: 10, left: "85%", position: "absolute"}}></View>
+
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
+              
+              {displayDates}
+              <View style={{width: "70%", height: 2, backgroundColor: 'black', marginTop: 25}}></View>
+
+              </View>
+          {displayScale}
+
+          
+
+          {/* <Text style={styles.subText}>
+            WEEKLY CONTACTS
+          </Text>
           <Text style={styles.subText}>
             CUMULATIVE SCORE
-          </Text>
+          </Text> */}
 
-        </View>
 
       </ScrollView>
 
@@ -83,15 +136,15 @@ StatsScreen.navigationOptions = {
   header: null,
 };
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
+// function handleLearnMorePress() {
+//   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
+// }
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
+// function handleHelpPress() {
+//   WebBrowser.openBrowserAsync(
+//     'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+//   );
+// }
 
 const styles = StyleSheet.create({
   container: {
@@ -101,15 +154,19 @@ const styles = StyleSheet.create({
   contentContainer: {
     paddingTop: 30,
   },
+  initialText: {
+    flex: 1,
+    alignItems: "center",
+  },
   welcomeContainer: {
     alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
   },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: status==="quarantined" ? 23 : 15,
-  },
+  // getStartedContainer: {
+  //   alignItems: 'center',
+  //   marginHorizontal: status==="quarantined" ? 23 : 15,
+  // },
   imageContainer: {
     alignItems: 'center',
     paddingTop: '0%',
