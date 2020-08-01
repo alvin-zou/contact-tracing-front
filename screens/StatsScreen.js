@@ -16,7 +16,7 @@ const status = "safe"; // safe, limited, restricted, quarantined
 function getCoordinatesForPercent(percent) {
   const x = Math.cos(2 * Math.PI * percent);
   const y = Math.sin(2 * Math.PI * percent);
-  
+
   return [x, y];
 }
 
@@ -38,10 +38,10 @@ const pathData = [
 
 
 
-statusColor = (status==="safe" ? theme.colors.primary.safe : 
-(status==="limited" ? theme.colors.primary.limited : 
-(status==="restricted" ? theme.colors.primary.restricted : 
-(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
+const statusColor = (status==="safe" ? theme.colors.primary.safe :
+(status==="limited" ? theme.colors.primary.limited :
+(status==="restricted" ? theme.colors.primary.restricted :
+(status==="quarantined" ? theme.colors.primary.quarantined : null))));
 
 export default function StatsScreen() {
   return (
