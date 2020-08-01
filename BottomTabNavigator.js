@@ -38,7 +38,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />, // https://infinitered.github.io/ionicons-version-3-search/
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Stats"
         component={StatsScreen}
         options={{
@@ -46,7 +46,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-stats" />,
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Campus"
         component={CampusScreen}
         options={{
@@ -54,7 +54,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-medkit" />,
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Messages"
         component={MessagesScreen}
         options={{
@@ -62,7 +62,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-megaphone" />,
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Menu"
         component={MenuScreen}
         options={{

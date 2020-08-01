@@ -9,6 +9,7 @@ import MessagesScreen from '../screens/MessagesScreen';
 import MenuScreen from '../screens/MenuScreen';
 import CampusScreen from '../screens/CampusScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
+import FormScreen from '../screens/FormScreen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -30,7 +31,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />, // https://infinitered.github.io/ionicons-version-3-search/
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Stats"
         component={StatsScreen}
         options={{
@@ -38,7 +39,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-stats" />,
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Campus"
         component={CampusScreen}
         options={{
@@ -46,7 +47,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-medkit" />,
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Messages"
         component={MessagesScreen}
         options={{
@@ -54,12 +55,20 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-megaphone" />,
         }}
       />
-      <BottomTab.Screen  
+      <BottomTab.Screen
         name="Menu"
         component={MenuScreen}
         options={{
           title: 'Menu',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-menu" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Form"
+        component={FormScreen}
+        options={{
+          title: 'Form',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
         }}
       />
     </BottomTab.Navigator>

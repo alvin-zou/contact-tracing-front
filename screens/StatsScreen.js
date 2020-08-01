@@ -41,7 +41,7 @@ const pathData = [
 const statusColor = (status==="safe" ? theme.colors.primary.safe :
 (status==="limited" ? theme.colors.primary.limited :
 (status==="restricted" ? theme.colors.primary.restricted :
-(status==="quarantined" ? theme.colors.primary.quarantined : null))));
+(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
 
 export default function StatsScreen() {
   return (
