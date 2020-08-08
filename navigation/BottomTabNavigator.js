@@ -9,6 +9,7 @@ import MessagesScreen from '../screens/MessagesScreen';
 import MenuScreen from '../screens/MenuScreen';
 import CampusScreen from '../screens/CampusScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
+import FormScreen from '../screens/FormScreen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -60,6 +61,14 @@ export default function BottomTabNavigator({ navigation, route }) {
         options={{
           title: 'Menu',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-menu" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Form"
+        component={FormScreen}
+        options={{
+          title: 'Form',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
         }}
       />
     </BottomTab.Navigator>
