@@ -1,22 +1,21 @@
-import * as WebBrowser from 'expo-web-browser';
-import { Ionicons } from '@expo/vector-icons';
+// import * as WebBrowser from 'expo-web-browser';
+// import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import theme from '../theme.js';
 // import { MonoText } from '../components/StyledText';
 
 
 export default function CampusScreen() {
 
-  let score = 100; 
 
-
-  // 12.5% score is 0 score
   const houses = [
-    {name: "CURRIER", imageFile: require('../assets/images/LimitContact.png'), score: 210},
-    {name: "ELIOT", imageFile: require('../assets/images/Safe.png'), score: 120},
-    {name: "ADAMS", imageFile: require('../assets/images/StayHome.png'), score: 100},
+    {name: "CURRIER", imageFile: require('../assets/images/LimitContact.png'), score: 400},
+    {name: "ELIOT", imageFile: require('../assets/images/Safe.png'), score: 500},
+    {name: "ADAMS", imageFile: require('../assets/images/StayHome.png'), score: 300},
+    {name: "ADAMS", imageFile: require('../assets/images/StayHome.png'), score: 200},
+    {name: "ADAMS", imageFile: require('../assets/images/StayHome.png'), score: 0},
   ];
 
   houses.sort((house1, house2) => house2.score - house1.score);
@@ -26,20 +25,22 @@ export default function CampusScreen() {
   const scoreLabels = Array.from([0, 1, 2, 3, 4, 5], x => x*(maxScore / 5));
 
   const getPercent = (score) => {
-      return `${12.5 + 12.5 * (score / (maxScore / 5) )}%`;
+      return 50 + 50.5 * (score / (maxScore / 5) );
   };
 
   const lineStyle = (index) => {
     return {
-      alignItems: 'center', position: 'absolute', left:`${12.5 * (index + 2)}%`, top: '25%'
+      alignItems: 'center', position: 'absolute', left: 50 * (index + 2), top: '5%'
     }
   }
 
   const showScoreLabel = scoreLabels.map( (score, index) => 
   <View key={index} style={lineStyle(index)}>
-    <View style={{width: 2, height: 450, backgroundColor: 'gainsboro',}}></View>
-    <View style={{position: 'absolute', width: 400, alignItems: 'center', top: '100%'}}><Text style={{fontSize: 15, color: "black", fontFamily: theme.fonts.secondary,}}>{score}</Text></View>
+    <View style={{width: 2, height: 130 * houses.length + 260, backgroundColor: 'gainsboro',}}></View>
   </View>
+  );
+  const showScoreLabel2 = scoreLabels.map( (score, index) => 
+    <Text key={index} style={{fontSize: 15, color: "black", fontFamily: theme.fonts.secondary, left: 45 + 27.5 * (index + 2), top: 10}}>{score}</Text>
   );
 
 
@@ -51,12 +52,14 @@ export default function CampusScreen() {
 
   const displayHouses = houses.map( (house, index) => 
     <View key={index}>
-        <View style={houseStyle(house.score, index)}></View>
-
-        <View key={index} style={styles.imageContainer}>
-          <Image style={styles.image} source={house.imageFile} /> 
-          <Text style={styles.houseText}>{house.name}</Text>
-        </View>
+      <View style={{flexDirection: "row"}}>
+      <View style={houseStyle(house.score, index)}></View>
+      {/* <Text style={{position: "absolute", width: getPercent(house.score), top: 65, left: getPercent(house.score), fontSize: 16,color: "black",fontFamily: theme.fonts.secondary}}>{house.score}</Text> */}
+      </View>
+      <View key={index} style={styles.imageContainer}>
+        <Image style={styles.image} source={house.imageFile} /> 
+        <Text style={styles.houseText}>{house.name}</Text>
+      </View>
         
     </View>
 
@@ -65,7 +68,6 @@ export default function CampusScreen() {
   return (
     <View style={styles.container}>
 
-      {showScoreLabel}
 
 
       <ScrollView contentContainerStyle={styles.contentContainer}>
@@ -79,16 +81,26 @@ export default function CampusScreen() {
 
         </View>
 
-        <View>
+        <View style={{flex: 1}}>
+          {showScoreLabel}
           {displayHouses}
+          <View style={{width: 50, height: 75}}>
+
+          </View>
+
         </View>
+
       </ScrollView>
+
+      <View style={{backgroundColor: "white", height: 50, width: "100%", flexDirection: "row"}}>
+        {showScoreLabel2}
+      </View>
 
     </View>
   );
 }
 
-// HomeScreen.navigationOptions = {
+// CampusScreen.navigationOptions = {
 //   header: null,
 // };
 
@@ -136,14 +148,13 @@ const styles = StyleSheet.create({
   },
   imageContainer: {
     paddingTop: '10%',
-    paddingLeft: "5%",
     flex: 1,
     color: theme.colors.primary.background,
     height: 135,
     width: 115,
+    alignItems: "center",
   },
   image: {
-    justifyContent: "flex-start",
     width: 75,
     height: 75,
     borderColor: "orange",
@@ -156,7 +167,6 @@ const styles = StyleSheet.create({
     color: "black",
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
-    alignSelf: "center",
   },
   infoText: {
     fontSize: 20,
