@@ -1,13 +1,12 @@
-// import * as WebBrowser from 'expo-web-browser';
+import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
-// import Svg, { Circle, Path } from 'react-native-svg';
-// import { Dimensions, TouchableHighlight } from 'react-native';
+import Svg, { Circle, Path } from 'react-native-svg';
+import { Dimensions, TouchableHighlight } from 'react-native';
 // import { MonoText } from '../components/StyledText';
 
-// const status = "safe"; // safe, limited, restricted, quarantined
 
 const status = "safe";
 const statusColor = theme.colors.primary.safe;
@@ -83,8 +82,72 @@ const displayScale = scoreLabels.map( (scale, index) =>
 );
 
 
+function getCoordinatesForPercent(percent) {
+  const x = Math.cos(2 * Math.PI * percent);
+  const y = Math.sin(2 * Math.PI * percent);
+
+  return [x, y];
+}
+
+const percent = 0.12;
+
+const startX = getCoordinatesForPercent(0)[0];
+const startY = getCoordinatesForPercent(0)[1];
+const endX = getCoordinatesForPercent(percent)[0];
+const endY = getCoordinatesForPercent(percent)[1];
+
+const largeArcFlag = percent > .5 ? 1 : 0;
+
+const pathData = [
+  `M ${startX} ${startY}`,
+  `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
+  `L 0 0`,
+].join(' ');
+
+
+const statusColor = (status==="safe" ? theme.colors.primary.safe :
+(status==="limited" ? theme.colors.primary.limited :
+(status==="restricted" ? theme.colors.primary.restricted :
+(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
+
+
+
 export default function StatsScreen() {
-  return (
+  return (    
+    
+    
+    <View style={styles.container}>
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+
+        <View style={styles.getStartedContainer}>
+
+          <Text style={styles.titleText}>
+            stats
+          </Text>
+          <Text style={styles.subText}>
+            TODAY'S CONTACTS
+          </Text>
+
+          <Svg height="100%" width="100%">
+            <Path d="M100 0 A100 100 0 0 1 100 200 A100 100 0 0 1 100 0" fill={theme.colors.fonts.light}/>
+            <Path d="M100 0 A100 100 0 0 1 200 100 L100 100" fill={statusColor}/>
+            <Path d="M100 40 A60 60 0 0 1 100 160 A60 60 0 0 1 100 40" fill={theme.colors.primary.background}/>
+          </Svg>
+
+          <Text style={styles.subText}>
+            WEEKLY STATISTICS
+          </Text>
+          <Text style={styles.subText}>
+            CUMULATIVE SCORE
+          </Text>
+
+        </View>
+
+      </ScrollView>
+
+    </View>
+    
+    
     <View style={styles.container}>
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
 

@@ -16,29 +16,29 @@ export default function HomeScreen() {
 
           <View style={styles.imageContainer}>
             <Image style={styles.image} source={require(
-              status==="safe" ? '../assets/images/Safe.png' : 
-              (status==="limited" ? '../assets/images/LimitContact.png' : 
-              (status==="restricted" ? '../assets/images/StayHome.png' : 
-              (status==="quarantined" ? '../assets/images/Quarantine.png' : 'black'))))} />
+              status==="safe" ? '../assets/images/Safe.png' :
+              (status==="limited" ? '../assets/images/LimitContact.png' :
+              (status==="restricted" ? '../assets/images/StayHome.png' :
+              (status==="quarantined" ? '../assets/images/Quarantine.png' : null))))} />
           </View>
 
           <Text style={styles.titleText}>
-            {status==="safe" ? `safe` : 
-              (status==="limited" ? `limit contact` : 
-              (status==="restricted" ? `stay home` : 
-              (status==="quarantined" ? `self-isolate` : 'black')))}
+            {status==="safe" ? `safe` :
+              (status==="limited" ? `limit contact` :
+              (status==="restricted" ? `stay home` :
+              (status==="quarantined" ? `self-isolate` : null)))}
           </Text>
           <Text style={styles.subText}>
-            {status==="safe" ? `YOUR INTERACTION COUNT IS WELL BELOW THE DAILY LIMIT.` : 
-              (status==="limited" ? `YOUR INTERACTION COUNT IS APPROACHING THE DAILY LIMIT.` : 
-              (status==="restricted" ? `YOUR INTERACTION COUNT HAS REACHED THE DAILY LIMIT.` : 
-              (status==="quarantined" ? `YOU'VE BEEN QUARANTINED DUE TO COVID-19 EXPOSURE.` : 'black')))}
+            {status==="safe" ? `YOUR INTERACTION COUNT IS WELL BELOW THE DAILY LIMIT.` :
+              (status==="limited" ? `YOUR INTERACTION COUNT IS APPROACHING THE DAILY LIMIT.` :
+              (status==="restricted" ? `YOUR INTERACTION COUNT HAS REACHED THE DAILY LIMIT.` :
+              (status==="quarantined" ? `YOU'VE BEEN QUARANTINED DUE TO COVID-19 EXPOSURE.` : null)))}
           </Text>
           <Text style={styles.subText}>
-            {status==="safe" ? `THANKS FOR KEEPING HARVARD HEALTHY.` : 
-              (status==="limited" ? `PRACTICE SOCIAL DISTANCING WHEREVER POSSIBLE.` : 
-              (status==="restricted" ? `STAY HOME.\n STOP THE SPREAD.` : 
-              (status==="quarantined" ? `AVOID NON-ESSENTIAL INTERACTIONS.` : 'black')))}
+            {status==="safe" ? `THANKS FOR KEEPING HARVARD HEALTHY.` :
+              (status==="limited" ? `PRACTICE SOCIAL DISTANCING WHEREVER POSSIBLE.` :
+              (status==="restricted" ? `STAY HOME.\n STOP THE SPREAD.` :
+              (status==="quarantined" ? `AVOID NON-ESSENTIAL INTERACTIONS.` : null)))}
           </Text>
 
         </View>
@@ -66,10 +66,10 @@ function handleHelpPress() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: status==="safe" ? theme.colors.primary.safe : 
-      (status==="limited" ? theme.colors.primary.limited : 
-      (status==="restricted" ? theme.colors.primary.restricted : 
-      (status==="quarantined" ? theme.colors.primary.quarantined : 'black'))),
+    backgroundColor: status==="safe" ? theme.colors.primary.safe :
+      (status==="limited" ? theme.colors.primary.limited :
+      (status==="restricted" ? theme.colors.primary.restricted :
+      (status==="quarantined" ? theme.colors.primary.quarantined : null))),
   },
   contentContainer: {
     paddingTop: 30,
