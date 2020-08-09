@@ -1,10 +1,10 @@
 {
   "webpackServerPort": null,
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 3447,
+  "expoServerNgrokUrl": "https://w4-8u2.anonymous.contact-tracing-front.exp.direct",
+  "packagerNgrokUrl": "https://packager.w4-8u2.anonymous.contact-tracing-front.exp.direct",
+  "ngrokPid": 3473,
   "devToolsPort": 19002
 }
