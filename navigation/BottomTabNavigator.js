@@ -9,7 +9,7 @@ import MessagesScreen from '../screens/MessagesScreen';
 import MenuScreen from '../screens/MenuScreen';
 import CampusScreen from '../screens/CampusScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
-import FormScreen from '../screens/FormScreen';
+import LogoutScreen from '../screens/LogoutScreen';
 
 
 const BottomTab = createBottomTabNavigator();
@@ -64,10 +64,10 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Form"
-        component={FormScreen}
+        name="Logout"
+        component={LogoutScreen}
         options={{
-          title: 'Form',
+          title: 'Logout',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
         }}
       />

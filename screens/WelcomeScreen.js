@@ -35,7 +35,7 @@ export default class WelcomeScreen extends React.Component {
           Animated.timing(this.state.fadeSecondText, {
             toValue: 1, duration: 3000,
           }).start(({ finished }) => {
-            this.props.navigation.replace('Root', true)
+            this.props.navigation.navigate('Sign On')
           });
         });
       });

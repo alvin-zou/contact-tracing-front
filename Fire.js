@@ -1,4 +1,5 @@
-import firebase from 'firebase'
+import firebase from 'firebase';
+import { Alert } from 'react-native';
 
 export function init() {
   var config = {
@@ -12,12 +13,34 @@ export function init() {
     measurementId: "G-B7HWD41TV6"
   };
 
-  firebase.initializeApp(config);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(config);
+  }
 }
 
-// Add ID as first argument once user login is possible
-export function writeUserData(firstName, lastName, house) {
-  firebase.database().ref('users/' + 1).set({
+export function signUpUser(email, password) {
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+                 .then(() => {
+                    Alert.alert('Account creation successful',
+                                'User account created & signed in!');
+                  })
+                  .catch(error => {
+                    if (error.code === 'auth/email-already-in-use') {
+                      Alert.alert('Already in use',
+                                  'That email address is already in use!');
+                    }
+
+                    if (error.code === 'auth/invalid-email') {
+                      Alert.alert('Invalid email',
+                                  'That email address is invalid!');
+                    }
+
+                    console.error(error);
+                  });
+}
+
+export function writeUserData(uid, firstName, lastName, house) {
+  firebase.database().ref('users/' + uid).set({
     firstName: firstName,
     lastName: lastName,
     house: house

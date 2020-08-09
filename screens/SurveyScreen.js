@@ -1,17 +1,12 @@
-import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import {  TextInput, View, Button, Platform, StyleSheet } from 'react-native';
+import {  TextInput, View, Button, StyleSheet } from 'react-native';
 import theme from '../theme.js';
 import * as fire from "../Fire.js";
+import { uid } from '../App.js';
 
-export default class FormScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      house: '',
-    }
+export default class SurveyScreen extends React.Component {
+  state = {
+    firstName: '', lastName: '', house: ''
   }
 
   render() {
@@ -31,17 +26,19 @@ export default class FormScreen extends React.Component {
         </TextInput>
         <Button
         title='Submit'
-        onPress={fire.writeUserData(
+        onPress={() => { fire.writeUserData(
+                  uid,
                   this.state.firstName,
                   this.state.lastName,
-                  this.state.house)}>
+                  this.state.house);
+                  this.props.navigation.navigate('Root'); }}>
         </Button>
     </View>
     );
   }
 }
 
-FormScreen.navigationOptions = {
+SurveyScreen.navigationOptions = {
   header: null,
 };
 
