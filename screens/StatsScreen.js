@@ -162,7 +162,6 @@ export default function StatsScreen() {
             <VictoryLegend
               x={125}
               y={50}
-              title="Legend"
               centerTitle
               orientation="horizontal"
               gutter={20}
