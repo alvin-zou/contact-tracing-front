@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-env browser */
 
 if ('serviceWorker' in navigator) {

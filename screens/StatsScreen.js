@@ -1,5 +1,5 @@
 // import * as WebBrowser from 'expo-web-browser';
-import React from "react";
+import React from 'react';
 import {
   // Image,
   Platform,
@@ -8,10 +8,9 @@ import {
   TouchableOpacity,
   View,
   Alert,
-} from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
-import theme from "../theme.js";
-import Svg, { Circle, Path } from "react-native-svg";
+} from 'react-native';
+import { ScrollView } from 'react-native-gesture-handler';
+
 import {
   VictoryBar,
   VictoryChart,
@@ -19,24 +18,30 @@ import {
   VictoryPie,
   VictoryStack,
   VictoryLegend,
-} from "victory-native";
+} from 'victory-native';
+import theme from '../theme';
 // import { Dimensions, TouchableHighlight } from "react-native";
 // import { MonoText } from '../components/StyledText';
 
-// const status = "safe"; // safe, limited, restricted, quarantined
+const status = 'safe';
 
-const status = "safe";
+let statusColor = '';
 
-const statusColor =
-  status === "safe"
-    ? theme.colors.primary.safe
-    : status === "limited"
-    ? theme.colors.primary.limited
-    : status === "restricted"
-    ? theme.colors.primary.restricted
-    : status === "quarantined"
-    ? theme.colors.primary.quarantined
-    : "black";
+switch (status) {
+  case 'safe':
+    statusColor = theme.colors.primary.safe;
+    break;
+  case 'limited':
+    statusColor = theme.colors.primary.limited;
+    break;
+  case 'restricted':
+    statusColor = theme.colors.primary.restricted;
+    break;
+  case 'quarantined':
+    statusColor = 'black';
+    break;
+  // no default
+}
 
 // rec = recommended number of contacts; act = actual number of contacts; first entry = 4 days ago, second entry = 3 days ago, etc.
 const contacts = [
@@ -73,7 +78,7 @@ const max = contacts.reduce(
 // };
 
 const startDay = 3; // 0 = MON, 1 = TUE, ETC.
-const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+const weekDays = ['MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN'];
 
 const weekDaysDisplay = [];
 for (let i = 0; i < 7; i++) {
@@ -92,9 +97,9 @@ const recBarData = weekDaysDisplay.map((weekday, index) => ({
 }));
 
 const pieChartData = [
-  { x: "Infected", y: 35 },
-  { x: "Exposed", y: 40 },
-  { x: "Safe", y: 55 },
+  { x: 'Infected', y: 35 },
+  { x: 'Exposed', y: 40 },
+  { x: 'Safe', y: 55 },
 ];
 
 const getCumulScore = () => {
@@ -113,9 +118,9 @@ const getColor = (act, rec) => {
 
 const infoAlert = () => {
   Alert.alert(
-    "Cumulative Score",
-    "Your cumulative score is meant to give you prev sense of how consistently you met the social distancing limits and guidelines.",
-    [{ text: "CLOSE", style: "cancel" }]
+    'Cumulative Score',
+    'Your cumulative score is meant to give you prev sense of how consistently you met the social distancing limits and guidelines.',
+    [{ text: 'CLOSE', style: 'cancel' }]
   );
 };
 
@@ -147,7 +152,7 @@ export default function StatsScreen() {
           <Text style={styles.titleText}>stats</Text>
           <Text style={styles.subText}>TODAY'S CONTACTS</Text>
           <VictoryPie
-            colorScale={["tomato", "orange", "gold"]}
+            colorScale={['tomato', 'orange', 'gold']}
             data={pieChartData}
           />
         </View>
@@ -165,13 +170,13 @@ export default function StatsScreen() {
               centerTitle
               orientation="horizontal"
               gutter={20}
-              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              style={{ border: { stroke: 'black' }, title: { fontSize: 20 } }}
               data={[
-                { name: "Actual", symbol: { fill: "tomato" } },
-                { name: "Recommended", symbol: { fill: "orange" } },
+                { name: 'Actual', symbol: { fill: 'tomato' } },
+                { name: 'Recommended', symbol: { fill: 'orange' } },
               ]}
             />
-            <VictoryStack colorScale={["tomato", "orange"]}>
+            <VictoryStack colorScale={['tomato', 'orange']}>
               <VictoryBar data={actBarData} />
               <VictoryBar data={recBarData} />
             </VictoryStack>
@@ -252,7 +257,7 @@ export default function StatsScreen() {
               {
                 fontSize: 20,
                 letterSpacing: 1,
-                textDecorationLine: "underline",
+                textDecorationLine: 'underline',
               },
             ]}
           >
@@ -281,70 +286,70 @@ StatsScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "white",
+    backgroundColor: 'white',
   },
   contentContainer: {
     paddingTop: 30,
   },
   chartContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#f5fcff",
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#f5fcff',
   },
   initialText: {
     flex: 1,
-    alignItems: "center",
+    alignItems: 'center',
   },
   welcomeContainer: {
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: 10,
     marginBottom: 20,
   },
   getStartedContainer: {
-    alignItems: "center",
+    alignItems: 'center',
 
     // marginHorizontal: status === "quarantined" ? 23 : 15,
   },
   imageContainer: {
-    alignItems: "center",
-    paddingTop: "0%",
-    width: "10%",
-    height: "10%",
+    alignItems: 'center',
+    paddingTop: '0%',
+    width: '10%',
+    height: '10%',
     color: theme.colors.primary.background,
   },
   image: {
     flex: 1,
     width: 250,
     height: 250,
-    resizeMode: "contain",
+    resizeMode: 'contain',
   },
   titleText: {
     fontSize: 60,
-    fontWeight: "bold",
+    fontWeight: 'bold',
     color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
-    textAlign: "center",
-    paddingTop: "3%",
+    textAlign: 'center',
+    paddingTop: '3%',
     letterSpacing: 3,
   },
   subText: {
     fontSize: 26,
-    paddingTop: "0%",
+    paddingTop: '0%',
     color: theme.colors.fonts.dark,
     fontFamily: theme.fonts.secondary,
-    textAlign: "center",
+    textAlign: 'center',
     letterSpacing: 3,
-    marginHorizontal: status === "restricted" ? 10 : 8,
+    marginHorizontal: status === 'restricted' ? 10 : 8,
   },
   tabBarInfoContainer: {
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
     ...Platform.select({
       ios: {
-        shadowColor: "black",
+        shadowColor: 'black',
         shadowOffset: { width: 0, height: -3 },
         shadowOpacity: 0.1,
         shadowRadius: 3,
@@ -353,13 +358,13 @@ const styles = StyleSheet.create({
         elevation: 20,
       },
     }),
-    alignItems: "center",
-    backgroundColor: "#fbfbfb",
+    alignItems: 'center',
+    backgroundColor: '#fbfbfb',
     paddingVertical: 20,
   },
   tabBarInfoText: {
     fontSize: 17,
-    color: "rgba(96,100,109, 1)",
-    textAlign: "center",
+    color: 'rgba(96,100,109, 1)',
+    textAlign: 'center',
   },
 });

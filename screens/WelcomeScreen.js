@@ -1,8 +1,17 @@
 import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Animated, Easing } from 'react-native';
+import {
+  Image,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Animated,
+  Easing,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import theme from '../theme.js';
+import theme from '../theme';
 import { MonoText } from '../components/StyledText';
 
 export default class WelcomeScreen extends React.Component {
@@ -11,16 +20,20 @@ export default class WelcomeScreen extends React.Component {
     this.state = {
       fadeFirstText: new Animated.Value(1),
       fadeSecondText: new Animated.Value(0),
-    }
+    };
   }
 
-  fadeIn = (anim, fn) => Animated.timing(anim, {
-    toValue: 1, duration: 1000,
-  }).start(fn);
+  fadeIn = (anim, fn) =>
+    Animated.timing(anim, {
+      toValue: 1,
+      duration: 1000,
+    }).start(fn);
 
-  fadeOut = (anim, fn) => Animated.timing(anim, {
-    toValue: 0, duration: 1000,
-  }).start(fn);
+  fadeOut = (anim, fn) =>
+    Animated.timing(anim, {
+      toValue: 0,
+      duration: 1000,
+    }).start(fn);
 
   componentDidMount() {
     this.animate();
@@ -28,14 +41,16 @@ export default class WelcomeScreen extends React.Component {
 
   animate() {
     Animated.timing(this.state.fadeFirstText, {
-      toValue: 1, duration: 3000, /* <--- modify for initial text time */
+      toValue: 1,
+      duration: 3000 /* <--- modify for initial text time */,
     }).start(({ finished }) => {
       this.fadeOut(this.state.fadeFirstText, ({ finished }) => {
         this.fadeIn(this.state.fadeSecondText, ({ finished }) => {
           Animated.timing(this.state.fadeSecondText, {
-            toValue: 1, duration: 3000,
+            toValue: 1,
+            duration: 3000,
           }).start(({ finished }) => {
-            this.props.navigation.replace('Root', true)
+            this.props.navigation.replace('Root', true);
           });
         });
       });
@@ -45,26 +60,26 @@ export default class WelcomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
           <View style={styles.getStartedContainer}>
-
-            <Text style={styles.welcomeText}>
-              welcome
-            </Text>
+            <Text style={styles.welcomeText}>welcome</Text>
             <View style={{ alignItems: 'center' }}>
-              <Animated.Text style={[styles.subText, { opacity: this.state.fadeFirstText, }]}>
+              <Animated.Text
+                style={[styles.subText, { opacity: this.state.fadeFirstText }]}
+              >
                 JUST A QUICK SURVEY TO GET STARTED
               </Animated.Text>
-              <Animated.Text style={[styles.subText, { opacity: this.state.fadeSecondText }]}>
+              <Animated.Text
+                style={[styles.subText, { opacity: this.state.fadeSecondText }]}
+              >
                 YOU CAN UPDATE YOUR RESPONSES AT ANY TIME
               </Animated.Text>
             </View>
-
           </View>
-
         </ScrollView>
-
       </View>
     );
   }
@@ -75,7 +90,9 @@ WelcomeScreen.navigationOptions = {
 };
 
 function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
+  WebBrowser.openBrowserAsync(
+    'https://docs.expo.io/versions/latest/workflow/development-mode/'
+  );
 }
 
 function handleHelpPress() {
