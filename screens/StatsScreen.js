@@ -17,6 +17,8 @@ import {
   VictoryChart,
   VictoryTheme,
   VictoryPie,
+  VictoryStack,
+  VictoryLegend,
 } from "victory-native";
 // import { Dimensions, TouchableHighlight } from "react-native";
 // import { MonoText } from '../components/StyledText';
@@ -38,7 +40,7 @@ const statusColor =
 
 // rec = recommended number of contacts; act = actual number of contacts; first entry = 4 days ago, second entry = 3 days ago, etc.
 const contacts = [
-  { rec: 35, act: 10 },
+  { rec: 33, act: 10 },
   { rec: 30, act: 25 },
   { rec: 25, act: 15 },
   { rec: 20, act: 10 },
@@ -46,6 +48,48 @@ const contacts = [
   { rec: 10, act: 13 },
   { rec: 10, act: 2 },
 ];
+
+const max = contacts.reduce(
+  (prev, curr) => Math.max(prev, curr.rec, curr.act),
+  0
+);
+
+// let max = 0;
+// for (let i = 0; i < 5; i++) {
+//   if (contacts[i].rec > max) {
+//     max = contacts[i].rec;
+//   }
+//   if (contacts[i].act > max) {
+//     max = contacts[i].act;
+//   }
+// }
+
+// const maxScore = Math.ceil(max / 10) * 10;
+
+// const scoreLabels = Array.from([4, 3, 2, 1, 0], (x) => x * (maxScore / 4));
+
+// const getHeight = (score) => {
+//   return 27.5 * (score / (maxScore / 4));
+// };
+
+const startDay = 3; // 0 = MON, 1 = TUE, ETC.
+const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+
+const weekDaysDisplay = [];
+for (let i = 0; i < 7; i++) {
+  weekDaysDisplay.push(weekDays[(startDay + i) % 7]);
+}
+
+// TODO how is this data calculated?
+const actBarData = weekDaysDisplay.map((weekday, index) => ({
+  x: weekday,
+  y: contacts[index].act,
+}));
+
+const recBarData = weekDaysDisplay.map((weekday, index) => ({
+  x: weekday,
+  y: contacts[index].rec,
+}));
 
 const pieChartData = [
   { x: "Infected", y: 35 },
@@ -56,32 +100,6 @@ const pieChartData = [
 const getCumulScore = () => {
   return 27;
 };
-
-let max = 0;
-for (let i = 0; i < 5; i++) {
-  if (contacts[i].rec > max) {
-    max = contacts[i].rec;
-  }
-  if (contacts[i].act > max) {
-    max = contacts[i].act;
-  }
-}
-
-const maxScore = Math.ceil(max / 10) * 10;
-
-const scoreLabels = Array.from([4, 3, 2, 1, 0], (x) => x * (maxScore / 4));
-
-const getHeight = (score) => {
-  return 27.5 * (score / (maxScore / 4));
-};
-
-const startDay = 3; // 0 = MON, 1 = TUE, ETC.
-const weekDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
-
-const weekDaysDisplay = [];
-for (let i = 0; i < 7; i++) {
-  weekDaysDisplay.push(weekDays[(startDay + i) % 7]);
-}
 
 const getColor = (act, rec) => {
   if (act > rec) {
@@ -96,27 +114,27 @@ const getColor = (act, rec) => {
 const infoAlert = () => {
   Alert.alert(
     "Cumulative Score",
-    "Your cumulative score is meant to give you a sense of how consistently you met the social distancing limits and guidelines.",
+    "Your cumulative score is meant to give you prev sense of how consistently you met the social distancing limits and guidelines.",
     [{ text: "CLOSE", style: "cancel" }]
   );
 };
 
-function getCoordinatesForPercent(percent) {
-  const x = Math.cos(2 * Math.PI * percent);
-  const y = Math.sin(2 * Math.PI * percent);
-  return [x, y];
-}
-const percent = 0.12;
-const startX = getCoordinatesForPercent(0)[0];
-const startY = getCoordinatesForPercent(0)[1];
-const endX = getCoordinatesForPercent(percent)[0];
-const endY = getCoordinatesForPercent(percent)[1];
-const largeArcFlag = percent > 0.5 ? 1 : 0;
-const pathData = [
-  `M ${startX} ${startY}`,
-  `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
-  `L 0 0`,
-].join(" ");
+// function getCoordinatesForPercent(percent) {
+//   const x = Math.cos(2 * Math.PI * percent);
+//   const y = Math.sin(2 * Math.PI * percent);
+//   return [x, y];
+// }
+// const percent = 0.12;
+// const startX = getCoordinatesForPercent(0)[0];
+// const startY = getCoordinatesForPercent(0)[1];
+// const endX = getCoordinatesForPercent(percent)[0];
+// const endY = getCoordinatesForPercent(percent)[1];
+// const largeArcFlag = percent > 0.5 ? 1 : 0;
+// const pathData = [
+//   `M ${startX} ${startY}`,
+//   `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
+//   `L 0 0`,
+// ].join(" ");
 
 export default function StatsScreen() {
   return (
@@ -141,7 +159,23 @@ export default function StatsScreen() {
 
         <View style={styles.container}>
           <VictoryChart width={350} theme={VictoryTheme.material}>
-            <VictoryBar data={contacts} x="rec" y="act" />
+            <VictoryLegend
+              x={125}
+              y={50}
+              title="Legend"
+              centerTitle
+              orientation="horizontal"
+              gutter={20}
+              style={{ border: { stroke: "black" }, title: { fontSize: 20 } }}
+              data={[
+                { name: "Actual", symbol: { fill: "tomato" } },
+                { name: "Recommended", symbol: { fill: "orange" } },
+              ]}
+            />
+            <VictoryStack colorScale={["tomato", "orange"]}>
+              <VictoryBar data={actBarData} />
+              <VictoryBar data={recBarData} />
+            </VictoryStack>
           </VictoryChart>
         </View>
 
@@ -241,7 +275,7 @@ StatsScreen.navigationOptions = {
 
 // function handleHelpPress() {
 //   WebBrowser.openBrowserAsync(
-//     'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+//     'https://docs.expo.io/versions/latest/get-started/create-prev-new-app/#making-your-first-change'
 //   );
 // }
 
