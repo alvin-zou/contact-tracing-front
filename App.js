@@ -9,6 +9,7 @@ import BottomTabNavigator from './navigation/BottomTabNavigator';
 import LinkingConfiguration from './navigation/LinkingConfiguration';
 
 import WelcomeScreen from './screens/WelcomeScreen';
+import OneMessageScreen from './screens/OneMessageScreen'; 
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App(props) {
           <Stack.Navigator initialRouteName="Welcome">
             <Stack.Screen name="Root" component={BottomTabNavigator} />
             <Stack.Screen name="Welcome" component={WelcomeScreen} />
+            <Stack.Screen name="OneMessage" component={OneMessageScreen}  />
           </Stack.Navigator>
         </NavigationContainer>
       </View>

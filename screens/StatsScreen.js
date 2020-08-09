@@ -10,13 +10,11 @@ import { Dimensions, TouchableHighlight } from 'react-native';
 // const status = "safe"; // safe, limited, restricted, quarantined
 
 const status = "safe";
-const statusColor = theme.colors.primary.safe;
 
-
-// statusColor = (status==="safe" ? theme.colors.primary.safe : 
-// (status==="limited" ? theme.colors.primary.limited : 
-// (status==="restricted" ? theme.colors.primary.restricted : 
-// (status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
+const statusColor = (status==="safe" ? theme.colors.primary.safe : 
+(status==="limited" ? theme.colors.primary.limited : 
+(status==="restricted" ? theme.colors.primary.restricted : 
+(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
 
 // rec = recommended number of contacts; act = actual number of contacts; first entry = 4 days ago, second entry = 3 days ago, etc.
 const contacts = [
@@ -112,10 +110,7 @@ const pathData = [
   `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,	
   `L 0 0`,	
 ].join(' ');	
-const statusColor = (status==="safe" ? theme.colors.primary.safe :	
-(status==="limited" ? theme.colors.primary.limited :	
-(status==="restricted" ? theme.colors.primary.restricted :	
-(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));	
+
 
 
 
@@ -138,10 +133,7 @@ export default function StatsScreen() {
           </Svg>	
         </View>	
       </ScrollView>	
-    </View>	
-    	
-    	
-    <View style={styles.container}>	
+
       <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>	
           <View style={styles.initialText}>	
             <Text style={styles.titleText}>	
