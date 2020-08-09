@@ -1,6 +1,6 @@
 // import * as WebBrowser from 'expo-web-browser';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Image,
   Platform,
@@ -11,10 +11,10 @@ import {
   Alert,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import theme from '../theme.js';
+import theme from '../theme';
 // import { MonoText } from '../components/StyledText';
 
-let status = 'safe'; // safe, limited, restricted, quarantined
+const status = 'safe'; // safe, limited, restricted, quarantined
 
 export default function HomeScreen() {
   // const [showInfo, setShowInfo] = useState(false);
@@ -31,12 +31,13 @@ export default function HomeScreen() {
     );
   };
 
-  let info, reportSymptoms;
+  let info;
+  let reportSymptoms;
 
   if (status === 'safe') {
     info = (
       <TouchableOpacity style={styles.info} onPress={infoAlert}>
-        <Ionicons name={'ios-information-circle'} size={30} color={'white'} />
+        <Ionicons name="ios-information-circle" size={30} color="white" />
         <Text style={styles.infoText}>MORE INFO</Text>
       </TouchableOpacity>
     );
@@ -45,9 +46,9 @@ export default function HomeScreen() {
     <TouchableOpacity>
       <View style={styles.report}>
         <Ionicons
-          name={'md-add-circle'}
+          name="md-add-circle"
           size={30}
-          color={'red'}
+          color="red"
           style={{ right: 10 }}
         />
         <Text style={styles.reportText}>REPORT SYMPTOMS</Text>
@@ -64,7 +65,7 @@ export default function HomeScreen() {
         {info}
 
         <View style={styles.getStartedContainer}>
-          {/* TODO use a switch statement instead of these nested ternary operators*/}
+          {/* TODO use a switch statement instead of these nested ternary operators */}
           <View style={styles.imageContainer}>
             <Image
               style={styles.image}
