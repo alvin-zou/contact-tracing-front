@@ -68,6 +68,10 @@ export default class SignOnScreen extends React.Component {
         title='Create new account'
         onPress={this.signUp}>
         </Button>
+        <Button
+        title='Test mode (skip login)'
+        onPress={() => {this.props.navigation.navigate('Root');}}>
+        </Button>
     </View>
     );
   }
