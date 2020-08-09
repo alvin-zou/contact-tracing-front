@@ -18,6 +18,14 @@ import SurveyScreen from './screens/SurveyScreen';
 const Stack = createStackNavigator();
 var uid;
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+});
+
+// eslint-disable-next-line no-unused-vars
 export default function App(props) {
   const isLoadingComplete = useCachedResources();
 
@@ -48,10 +56,3 @@ export default function App(props) {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
-});

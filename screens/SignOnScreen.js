@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {  TextInput, View, Button, Platform, StyleSheet, Alert } from 'react-native';
 import theme from '../theme.js';
-import firebase from 'firebase';
+import fire from '../Fire.js';
 
 export default class SignOnScreen extends React.Component {
   state = {
@@ -10,43 +10,12 @@ export default class SignOnScreen extends React.Component {
   signUp = async () => {
     const email = String(this.state.email).trim();
     const password = String(this.state.password).trim();
-    firebase.auth().createUserWithEmailAndPassword(email, password)
-                   .then(() => {
-                      console.log('User account created & signed in!');
-                      this.props.navigation.navigate('Survey');
-                    })
-                    .catch(error => {
-                      if (error.code === 'auth/email-already-in-use') {
-                        console.log('That email address is already in use!');
-                      }
-
-                      if (error.code === 'auth/invalid-email') {
-                        console.log('That email address is invalid!');
-                      }
-
-                      console.error(error);
-                    });
+    fire.signUpUser(email, password);
   }
   login = async () => {
     const email = String(this.state.email).trim();
     const password = String(this.state.password).trim();
-    firebase.auth().signInWithEmailAndPassword(email, password)
-                 .then(() => {
-                   console.log('You\'ve been signed in!');
-                   this.props.navigation.navigate('Root');
-                 })
-                 .catch(error => {
-
-                   if (error.code === 'auth/invalid-password') {
-                     console.log('This password is invalid!');
-                   }
-
-                   if (error.code === 'auth/invalid-email') {
-                     console.log('That email address is invalid!');
-                   }
-
-                   console.error(error);
-                 });
+    fire.loginUser(email, password);
   }
 
   render() {
@@ -62,11 +31,11 @@ export default class SignOnScreen extends React.Component {
         </TextInput>
         <Button
         title='Login'
-        onPress={this.login}>
+        onPress={() => { this.login; this.props.navigation.navigate('Root'); }}>
         </Button>
         <Button
         title='Create new account'
-        onPress={this.signUp}>
+        onPress={() => { this.signUp; this.props.navigation.navigate('Survey'); }}>
         </Button>
     </View>
     );

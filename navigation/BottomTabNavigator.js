@@ -11,7 +11,6 @@ import CampusScreen from '../screens/CampusScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
 import LogoutScreen from '../screens/LogoutScreen';
 
-
 const BottomTab = createBottomTabNavigator();
 const INITIAL_ROUTE_NAME = 'Home';
 
@@ -28,7 +27,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={HomeScreen}
         options={{
           title: 'Home',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />, // https://infinitered.github.io/ionicons-version-3-search/
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-person" />
+          ), // https://infinitered.github.io/ionicons-version-3-search/
         }}
       />
       <BottomTab.Screen
@@ -36,7 +37,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={StatsScreen}
         options={{
           title: 'Statistics',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-stats" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-stats" />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -44,7 +47,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={CampusScreen}
         options={{
           title: 'Campus',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-medkit" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-medkit" />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -52,7 +57,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={MessagesScreen}
         options={{
           title: 'Messages',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-megaphone" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-megaphone" />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -60,7 +67,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={MenuScreen}
         options={{
           title: 'Menu',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-menu" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-menu" />
+          ),
         }}
       />
       <BottomTab.Screen
@@ -76,7 +85,8 @@ export default function BottomTabNavigator({ navigation, route }) {
 }
 
 function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
+  const routeName =
+    route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
     case 'Home':

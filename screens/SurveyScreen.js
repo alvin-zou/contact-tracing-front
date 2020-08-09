@@ -13,17 +13,17 @@ export default class SurveyScreen extends React.Component {
     return (
       <View style={styles.container}>
         <TextInput
-        placeholder="First name"
-        onChangeText={(text) => this.setState({firstName: text})}>
-        </TextInput>
+          placeholder="First name"
+          onChangeText={(text) => this.setState({ firstName: text })}
+        />
         <TextInput
-        placeholder="Last name"
-        onChangeText={(text) => this.setState({lastName: text})}>
-        </TextInput>
+          placeholder="Last name"
+          onChangeText={(text) => this.setState({ lastName: text })}
+        />
         <TextInput
-        placeholder="House"
-        onChangeText={(text) => this.setState({house: text})}>
-        </TextInput>
+          placeholder="House"
+          onChangeText={(text) => this.setState({ house: text })}
+        />
         <Button
         title='Submit'
         onPress={() => { fire.writeUserData(
@@ -46,6 +46,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.primary.background,
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });

@@ -2,7 +2,7 @@ import firebase from 'firebase';
 import { Alert } from 'react-native';
 
 export function init() {
-  var config = {
+  const config = {
     apiKey: "AIzaSyDJCY20RQG-OGtRUgNil9XNrRJr4y28RsQ",
     authDomain: "hcapp-e434a.firebaseapp.com",
     databaseURL: "https://hcapp-e434a.firebaseio.com",
@@ -10,7 +10,7 @@ export function init() {
     storageBucket: "hcapp-e434a.appspot.com",
     messagingSenderId: "761140869554",
     appId: "1:761140869554:web:ea56455bcf11dd1b55ccab",
-    measurementId: "G-B7HWD41TV6"
+    measurementId: "G-B7HWD41TV6",
   };
 
   if (!firebase.apps.length) {
@@ -20,23 +20,39 @@ export function init() {
 
 export function signUpUser(email, password) {
   firebase.auth().createUserWithEmailAndPassword(email, password)
+                   .then(() => {
+                      console.log('User account created & signed in!');
+                    })
+                    .catch(error => {
+                      if (error.code === 'auth/email-already-in-use') {
+                        console.log('That email address is already in use!');
+                      }
+
+                      if (error.code === 'auth/invalid-email') {
+                        console.log('That email address is invalid!');
+                      }
+
+                      console.error(error);
+                    });
+}
+
+export function loginUser(email, password) {
+  firebase.auth().signInWithEmailAndPassword(email, password)
                  .then(() => {
-                    Alert.alert('Account creation successful',
-                                'User account created & signed in!');
-                  })
-                  .catch(error => {
-                    if (error.code === 'auth/email-already-in-use') {
-                      Alert.alert('Already in use',
-                                  'That email address is already in use!');
-                    }
+                   console.log('You\'ve been signed in!');
+                 })
+                 .catch(error => {
 
-                    if (error.code === 'auth/invalid-email') {
-                      Alert.alert('Invalid email',
-                                  'That email address is invalid!');
-                    }
+                   if (error.code === 'auth/invalid-password') {
+                     console.log('This password is invalid!');
+                   }
 
-                    console.error(error);
-                  });
+                   if (error.code === 'auth/invalid-email') {
+                     console.log('That email address is invalid!');
+                   }
+
+                   console.error(error);
+                 });
 }
 
 export function writeUserData(uid, firstName, lastName, house) {
