@@ -1,12 +1,13 @@
-import * as WebBrowser from 'expo-web-browser';
+// import * as WebBrowser from 'expo-web-browser';
 import React, { Component } from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
 import Svg, { Circle, Path } from 'react-native-svg';
 import { Dimensions, TouchableHighlight } from 'react-native';
 // import { MonoText } from '../components/StyledText';
 
+// const status = "safe"; // safe, limited, restricted, quarantined
 
 const status = "safe";
 const statusColor = theme.colors.primary.safe;
@@ -27,6 +28,10 @@ const contacts = [
   {rec: 10, act: 13},
   {rec: 10, act: 2}
 ];
+
+const getCumulScore = () => {
+  return 37;
+}
 
 let max = 0;
 for (let i = 0; i < 5; i++) {
@@ -65,6 +70,15 @@ const getColor = (act, rec) => {
   return theme.colors.primary.safe;
 }
 
+const infoAlert = () => {
+  Alert.alert(
+    "Cumulative Score",
+    "Your cumulative score is meant to give you a sense of how consistently you met the social distancing limits and guidelines.",
+    [
+      {text: "CLOSE", style:"cancel"}
+    ]
+  )}
+
 const displayDates = contacts.map( (contact, index) => 
 <View key={index} style={{position: "absolute", top: 135, left: 75 + index * 40, alignItems: "center", flexDirection: "column-reverse"}}>
   {/* <View style={{width: 25, height: 130, backgroundColor: 'white', }}></View> */}
@@ -82,117 +96,91 @@ const displayScale = scoreLabels.map( (scale, index) =>
 );
 
 
-function getCoordinatesForPercent(percent) {
-  const x = Math.cos(2 * Math.PI * percent);
-  const y = Math.sin(2 * Math.PI * percent);
-
-  return [x, y];
-}
-
-const percent = 0.12;
-
-const startX = getCoordinatesForPercent(0)[0];
-const startY = getCoordinatesForPercent(0)[1];
-const endX = getCoordinatesForPercent(percent)[0];
-const endY = getCoordinatesForPercent(percent)[1];
-
-const largeArcFlag = percent > .5 ? 1 : 0;
-
-const pathData = [
-  `M ${startX} ${startY}`,
-  `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
-  `L 0 0`,
-].join(' ');
-
-
-const statusColor = (status==="safe" ? theme.colors.primary.safe :
-(status==="limited" ? theme.colors.primary.limited :
-(status==="restricted" ? theme.colors.primary.restricted :
-(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));
+function getCoordinatesForPercent(percent) {	
+  const x = Math.cos(2 * Math.PI * percent);	
+  const y = Math.sin(2 * Math.PI * percent);	
+  return [x, y];	
+}	
+const percent = 0.12;	
+const startX = getCoordinatesForPercent(0)[0];	
+const startY = getCoordinatesForPercent(0)[1];	
+const endX = getCoordinatesForPercent(percent)[0];	
+const endY = getCoordinatesForPercent(percent)[1];	
+const largeArcFlag = percent > .5 ? 1 : 0;	
+const pathData = [	
+  `M ${startX} ${startY}`,	
+  `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,	
+  `L 0 0`,	
+].join(' ');	
+const statusColor = (status==="safe" ? theme.colors.primary.safe :	
+(status==="limited" ? theme.colors.primary.limited :	
+(status==="restricted" ? theme.colors.primary.restricted :	
+(status==="quarantined" ? theme.colors.primary.quarantined : 'black'))));	
 
 
 
-export default function StatsScreen() {
-  return (    
-    
-    
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
-        <View style={styles.getStartedContainer}>
-
-          <Text style={styles.titleText}>
-            stats
-          </Text>
-          <Text style={styles.subText}>
-            TODAY'S CONTACTS
-          </Text>
-
-          <Svg height="100%" width="100%">
-            <Path d="M100 0 A100 100 0 0 1 100 200 A100 100 0 0 1 100 0" fill={theme.colors.fonts.light}/>
-            <Path d="M100 0 A100 100 0 0 1 200 100 L100 100" fill={statusColor}/>
-            <Path d="M100 40 A60 60 0 0 1 100 160 A60 60 0 0 1 100 40" fill={theme.colors.primary.background}/>
-          </Svg>
-
-          <Text style={styles.subText}>
-            WEEKLY STATISTICS
-          </Text>
+export default function StatsScreen() {	
+  return (    	
+    	
+    <View style={styles.container}>	
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>	
+        <View style={styles.getStartedContainer}>	
+          <Text style={styles.titleText}>	
+            stats	
+          </Text>	
+          <Text style={styles.subText}>	
+            TODAY'S CONTACTS	
+          </Text>	
+          <Svg height="100%" width="100%">	
+            <Path d="M100 0 A100 100 0 0 1 100 200 A100 100 0 0 1 100 0" fill={theme.colors.fonts.light}/>	
+            <Path d="M100 0 A100 100 0 0 1 200 100 L100 100" fill={statusColor}/>	
+            <Path d="M100 40 A60 60 0 0 1 100 160 A60 60 0 0 1 100 40" fill={theme.colors.primary.background}/>	
+          </Svg>	
+        </View>	
+      </ScrollView>	
+    </View>	
+    	
+    	
+    <View style={styles.container}>	
+      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>	
+          <View style={styles.initialText}>	
+            <Text style={styles.titleText}>	
+              personal	
+            </Text>	
+          </View>	
+          <Text style={styles.subText}>	
+            WEEKLY STATISTICS	
+          </Text>	
+          	
+            <View style={{alignItems: "center", flex: 1, height: 300, flexDirection: "column"}}>	
+              <View style={{width: 2, height: 125, backgroundColor: 'black', top: 10, left: "85%", position: "absolute"}}></View>	
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>	
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>	
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>	
+              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>	
+              	
+              {displayDates}	
+              <View style={{width: "70%", height: 2, backgroundColor: 'black', marginTop: 25}}></View>	
+              </View>	
+          {displayScale}	
+          	
           <Text style={styles.subText}>
             CUMULATIVE SCORE
           </Text>
-
-        </View>
-
-      </ScrollView>
-
-    </View>
-    
-    
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-
-
           <View style={styles.initialText}>
             <Text style={styles.titleText}>
-              personal
+              {getCumulScore()}
             </Text>
           </View>
-
-          <Text style={styles.subText}>
-            WEEKLY STATISTICS
+          <TouchableOpacity onPress={infoAlert}>
+          <Text style={[styles.subText, {fontSize: 20, letterSpacing: 1, textDecorationLine: "underline",}]}>
+            WHAT'S THIS?
           </Text>
-
-          
-
-            <View style={{alignItems: "center", flex: 1, height: 300, flexDirection: "column"}}>
-
-              <View style={{width: 2, height: 125, backgroundColor: 'black', top: 10, left: "85%", position: "absolute"}}></View>
-
-              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
-              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
-              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
-              <View style={{width: "70%", height: 2, backgroundColor: 'gainsboro', marginTop: 25}}></View>
-              
-              {displayDates}
-              <View style={{width: "70%", height: 2, backgroundColor: 'black', marginTop: 25}}></View>
-
-              </View>
-          {displayScale}
-
-          
-
-          {/* <Text style={styles.subText}>
-            WEEKLY CONTACTS
-          </Text>
-          <Text style={styles.subText}>
-            CUMULATIVE SCORE
-          </Text> */}
-
-
-      </ScrollView>
-
-    </View>
-  );
+          </TouchableOpacity>
+    
+      </ScrollView>	
+    </View>	
+  );	
 }
 
 StatsScreen.navigationOptions = {
@@ -246,8 +234,7 @@ const styles = StyleSheet.create({
   titleText: {
     fontSize: 60,
     fontWeight: 'bold',
-    paddingTop: '5%',
-    color: statusColor,
+    color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
     textAlign: 'center',
     letterSpacing: 3,

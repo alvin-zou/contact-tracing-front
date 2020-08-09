@@ -11,11 +11,20 @@ export default function CampusScreen() {
 
 
   const houses = [
-    {name: "CURRIER", imageFile: require('../assets/images/LimitContact.png'), score: 400},
-    {name: "ELIOT", imageFile: require('../assets/images/Safe.png'), score: 500},
-    {name: "ADAMS", imageFile: require('../assets/images/StayHome.png'), score: 300},
-    {name: "ADAMS", imageFile: require('../assets/images/StayHome.png'), score: 200},
-    {name: "ADAMS", imageFile: require('../assets/images/StayHome.png'), score: 0},
+    {name: "CURRIER", imageFile: require('../assets/images/Currier.png'), score: 500},
+    {name: "QUINCY", imageFile: require('../assets/images/Quincy.png'), score: 450},
+    {name: "WINTHROP", imageFile: require('../assets/images/Winthrop.png'), score: 400},
+    {name: "LOWELL", imageFile: require('../assets/images/Lowell.png'), score: 350},
+    {name: "ELIOT", imageFile: require('../assets/images/Eliot.png'), score: 330},
+    {name: "MATHER", imageFile: require('../assets/images/Mather.png'), score: 300},
+    {name: "KIRKLAND", imageFile: require('../assets/images/Kirkland.png'), score: 250},
+    {name: "DUNSTER", imageFile: require('../assets/images/Dunster.png'), score: 230},
+    {name: "LEVERETT", imageFile: require('../assets/images/Leverett.png'), score: 200},
+    {name: "ADAMS", imageFile: require('../assets/images/Adams.png'), score: 150},
+    {name: "PFOHO", imageFile: require('../assets/images/Pfoho.png'), score: 100},
+    {name: "CABOT", imageFile: require('../assets/images/Cabot.png'), score: 50},
+    {name: "DUDLEY", imageFile: require('../assets/images/Dudley.png'), score: 0},
+
   ];
 
   houses.sort((house1, house2) => house2.score - house1.score);
@@ -30,13 +39,13 @@ export default function CampusScreen() {
 
   const lineStyle = (index) => {
     return {
-      alignItems: 'center', position: 'absolute', left: 50 * (index + 2), top: '5%'
+      alignItems: 'center', position: 'absolute', left: 50 * (index + 2), top: 20
     }
   }
 
   const showScoreLabel = scoreLabels.map( (score, index) => 
   <View key={index} style={lineStyle(index)}>
-    <View style={{width: 2, height: 130 * houses.length + 260, backgroundColor: 'gainsboro',}}></View>
+    <View style={{width: 2, height: 130 * houses.length + 260, backgroundColor: '#E8E8E8',}}></View>
   </View>
   );
   const showScoreLabel2 = scoreLabels.map( (score, index) => 
@@ -46,7 +55,7 @@ export default function CampusScreen() {
 
   const houseStyle = (score, index) => {
     return {
-      backgroundColor: index==0 ? "cadetblue" : "gainsboro", height: 50, width: getPercent(score), position: "absolute", top: 50, left: 50,
+      backgroundColor: index==0 ? "#4D4D4D" : "#E8E8E8", height: 25, width: getPercent(score), position: "absolute", top: 45, left: 50,
     }
   }
 
@@ -56,11 +65,21 @@ export default function CampusScreen() {
       <View style={houseStyle(house.score, index)}></View>
       {/* <Text style={{position: "absolute", width: getPercent(house.score), top: 65, left: getPercent(house.score), fontSize: 16,color: "black",fontFamily: theme.fonts.secondary}}>{house.score}</Text> */}
       </View>
-      <View key={index} style={styles.imageContainer}>
+      <View key={index} style={{alignItems: "center", height: 100, width: 100, top: 20, right: 0}}>
+      <View style={{
+    height: 75,
+    width: 75,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderColor: index == 0 ? "#EFA148" : (index == 1 ? "#707070" : (index == 2 ? "#AA7372" : "#4D4D4D")),
+    borderWidth: 5,
+    borderRadius: 75 / 2,
+  }}>
         <Image style={styles.image} source={house.imageFile} /> 
-        <Text style={styles.houseText}>{house.name}</Text>
       </View>
-        
+      <Text style={styles.houseText}>{house.name}</Text>
+      </View>
     </View>
 
   );
@@ -134,7 +153,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     // paddingTop: '55%',
-    color: theme.colors.primary.safe,
+    color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
     letterSpacing: 3,
   },
@@ -157,9 +176,20 @@ const styles = StyleSheet.create({
   image: {
     width: 75,
     height: 75,
+    width: 75,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
     borderColor: "orange",
     borderWidth: 5,
     borderRadius: 75 / 2,
+  },
+  image: {
+    resizeMode: "contain",
+    height: 40,
+    width: 40,
+    left: 1,
+    top: 2,
   },
   houseText: {
     fontSize: 15,

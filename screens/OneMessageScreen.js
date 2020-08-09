@@ -7,15 +7,8 @@ import theme from '../theme.js';
 // import { MonoText } from '../components/StyledText';
 
 
-export default function MessagesScreen({route, navigation}) {
-
-
-  const [messages, setMessages] = useState([
-    {read: false, title: "STATUS UPDATE: END QUARANTINE", message: "YOU'RE NO LONGER SHOWING ELEVATED LEVELS OF EXPOSURE TO COVID-19. WHILE YOU NEED NOT CONTINUE TO QUARANTINE, IT IS ADVISED THAT YOU CONTINUE TO PRACTICE SOCIAL DISTANCING."},
-    {read: false, title: "UPDATE ON SOCIAL DISTANCING", message: "DEAR STUDENTS, DUE TO THE SUCCESS OF OUR CONTACT TRACING EFFORTS, WE'RE NOW ALLOWING IN-PERSON CLASSES WITH AT MOST 20 STUDENTS EACH."},
-    {read: false, title: "WELCOME BACK", message: "DEAR STUDENTS, WELCOME BACK TO HARVARD! WE KNOW THAT THIS SEMESTER WILL LOOK VERY DIFFERENT FROM WHAT WE HAD DESIRED."},
-  ]);
-
+export default function OneMessageScreen({route, navigation}) {
+  const {message, title} = route.params;
 
 
   const dotStyle = (read) => {
@@ -25,25 +18,19 @@ export default function MessagesScreen({route, navigation}) {
     return {height: 17, width: 17, backgroundColor: "white", borderRadius: 17 / 2, marginLeft: 10}      
   };
 
-  const openMessage = (ind) => {
-    let newMessages = messages.slice();
-    newMessages[ind].read = true;
-      setMessages(newMessages); 
-  } 
-
-  const showMessages = messages.map( (message, index) => 
-    <TouchableOpacity key={index} style={{flex: 1}} onPress={() => {openMessage(index); navigation.navigate('OneMessage', {title: message.title, message: message.message});
-  }}>
+  const showMessage = 
+    <View style={{flex: 1}}>
       <View style={{flexDirection: "row", alignItems: "center"}}>
-        <View style={dotStyle(message.read)}></View>
-        <Text style={styles.messageTitleText} >
-            {message.title}
-        </Text>
+        <Text style={styles.messageTitleTextOne}>{title}</Text>
       </View>
-      <Text style={styles.messageText} numberOfLines={3} >{message.message}</Text>
-      <View style={{width: "100%", height: 1, marginBottom: 10, marginTop: 10, backgroundColor: 'black',}}></View>
-    </TouchableOpacity>
-  );
+      <Text style={styles.messageTextOne}>{message}</Text>
+      <View style={{alignItems: "center", marginTop: 30}}>
+     <Button title="Go back" onPress={() => navigation.navigate('Messages')} style={{alignSelf: "center"}}></Button>
+    </View>
+    <View style={{width: "100%", height: 1, marginBottom: 10, marginTop: 20, backgroundColor: 'black',}}></View>
+
+    </View>
+    
 
   // const showOneMessage = () => {
   //   const message = messages[0];
@@ -73,7 +60,7 @@ export default function MessagesScreen({route, navigation}) {
       
           <View> 
           <View style={{width: "100%", height: 1, marginBottom: 10, marginTop: 10, backgroundColor: 'black',}}></View>
-          {showMessages} 
+          {showMessage} 
           </View>
         
         

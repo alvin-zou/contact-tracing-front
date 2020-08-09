@@ -1,5 +1,5 @@
-import * as WebBrowser from 'expo-web-browser';
-import { Ionicons } from '@expo/vector-icons';
+// import * as WebBrowser from 'expo-web-browser';
+// import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -7,7 +7,7 @@ import theme from '../theme.js';
 // import { MonoText } from '../components/StyledText';
 
 
-export default function MenuScreen() {
+export default function MenuScreen({navigation}) {
 
 
   const house = {name: "CURRIER HOUSE", file: require('../assets/images/Currier.png')};
@@ -17,37 +17,37 @@ export default function MenuScreen() {
   const aboutImageSecondRow = [{name: "SETTINGS", file: require("../assets/images/Settings.png")}, {name: "COVID-19 INFO", file: require("../assets/images/covid_info.png")}, {name: "CONTACT US", file: require("../assets/images/Contact_us.png")}]
 
   const displayFirstRow = aboutImageFirstRow.map( (img, index) => 
-      <View key={index} style={styles.imageContainer}>
+      <TouchableOpacity key={index} style={styles.imageContainer}  onPress={()=> Alert.alert("Not available yet.")}>
         <Image style={styles.aboutImage} source={img.file}></Image>
         <Text style={styles.houseText}>{img.name}</Text>
-      </View>
+      </TouchableOpacity>
   );
 
   const displaySecondRow = aboutImageSecondRow.map( (img, index) => 
-      <View key={index} style={styles.imageContainer}>
-        <Image style={styles.aboutImage} source={img.file}></Image>
-        <Text style={styles.houseText}>{img.name}</Text>
-      </View>
+  <TouchableOpacity key={index} style={styles.imageContainer}  onPress={()=> Alert.alert("Not available yet.")}>
+  <Image style={styles.aboutImage} source={img.file}></Image>
+  <Text style={styles.houseText}>{img.name}</Text>
+</TouchableOpacity>
   );
 
   const showFirstRow = (
     <View style={{alignContent: "center", flexDirection:"row", paddingTop: '10%', flex: 1, justifyContent: "center"}}>
       <View style={styles.imageContainer}>
-        <View style={{height: 75, width: 75, backgroundColor: theme.colors.primary.safe, borderRadius: 75 / 2}}>
+        <View style={{height: 75, width: 75, backgroundColor: theme.colors.primary.oldSafe, borderRadius: 75 / 2}}>
           <Text style={{fontSize: 37, top: 10, textAlign: "center", color: "white",fontFamily: theme.fonts.secondary,letterSpacing: 1,}}>
             {student.acronym}
           </Text>
         </View>
         <Text style={styles.houseText}>{student.name}</Text>
       </View>
-      <View style={styles.imageContainer}>
-          <Image style={styles.image} source={house.file} /> 
-          <Text style={styles.houseText}>{house.name}</Text>
+      <View style={styles.imageContainer2}>
+          <Image style={styles.image2} source={house.file} /> 
+          <Text style={styles.houseText2}>{house.name}</Text>
       </View>
       <View style={styles.imageContainer}>
         {
           negative ? 
-          <View style={{height: 75, width: 75, backgroundColor: theme.colors.primary.safe, borderRadius: 75 / 2}}>
+          <View style={{height: 75, width: 75, backgroundColor: theme.colors.primary.oldSafe, borderRadius: 75 / 2}}>
           <Text style={{fontSize: 70,textAlign: "center", color: "white",fontFamily: theme.fonts.secondary,letterSpacing: 1, bottom: 15}}>
           -</Text>
         </View>
@@ -82,7 +82,7 @@ export default function MenuScreen() {
 
         <View>
           {showFirstRow}
-          <Text style={styles.infoText}>EDIT PROFILE</Text>
+          <Text style={styles.infoText} onPress={() => Alert.alert("Not available yet.")}>EDIT PROFILE</Text>
         </View>
         <Text style={styles.subText}>
               ABOUT
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: 'bold',
     // paddingTop: '55%',
-    color: theme.colors.primary.safe,
+    color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
     letterSpacing: 3,
   },
@@ -166,6 +166,24 @@ const styles = StyleSheet.create({
     borderWidth: 5,
     borderRadius: 75 / 2,
   },
+  imageContainer2: {
+    marginHorizontal: 30,
+    height: 75,
+    width: 75,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderColor: "orange",
+    borderWidth: 5,
+    borderRadius: 75 / 2,
+  },
+  image2: {
+    resizeMode: "contain",
+    height: 40,
+    width: 40,
+    left: 1,
+    top: 22,
+  },
   houseText: {
     fontSize: 15,
     // paddingTop: '15%',
@@ -174,6 +192,15 @@ const styles = StyleSheet.create({
     color: "black",
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
+  },
+  houseText2: {
+    fontSize: 15,
+    textAlign: "center",
+    width: 125,
+    color: "black",
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 1,
+    top: 37,
   },
   logoText: {
     fontSize: 15,
