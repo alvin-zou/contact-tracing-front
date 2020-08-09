@@ -24,6 +24,7 @@ export default function CampusScreen() {
     {name: "PFOHO", imageFile: require('../assets/images/Pfoho.png'), score: 100},
     {name: "CABOT", imageFile: require('../assets/images/Cabot.png'), score: 50},
     {name: "DUDLEY", imageFile: require('../assets/images/Dudley.png'), score: 0},
+
   ];
 
   houses.sort((house1, house2) => house2.score - house1.score);
@@ -79,8 +80,6 @@ export default function CampusScreen() {
       </View>
       <Text style={styles.houseText}>{house.name}</Text>
       </View>
-
-        
     </View>
 
   );
@@ -167,6 +166,15 @@ const styles = StyleSheet.create({
     marginHorizontal:  8,
   },
   imageContainer: {
+    paddingTop: '10%',
+    flex: 1,
+    color: theme.colors.primary.background,
+    height: 135,
+    width: 115,
+    alignItems: "center",
+  },
+  image: {
+    width: 75,
     height: 75,
     width: 75,
     alignItems: "center",
