@@ -61,6 +61,7 @@ export default function MenuScreen({ navigation }) {
         flexDirection: 'row',
         paddingTop: '10%',
         flex: 1,
+        bottom: 25,
         justifyContent: 'center',
       }}
     >
@@ -153,19 +154,24 @@ export default function MenuScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.initialText}>
           <Text style={styles.titleText}>menu</Text>
+          <View style={{height: 10, flex: 1}}></View>
           <Text style={styles.subText}>PROFILE</Text>
         </View>
 
         <View>
           {showFirstRow}
-          <Text
+          {/* <Text
             style={styles.infoText}
             onPress={() => Alert.alert('Not available yet.')}
           >
             EDIT PROFILE
-          </Text>
+          </Text> */}
         </View>
+
+        <View style={{height: 10, flex: 1}}></View>
         <Text style={styles.subText}>ABOUT</Text>
+        <View style={{height: 10, flex: 1}}></View>
+
 
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           {displayFirstRow}
@@ -214,16 +220,14 @@ const styles = StyleSheet.create({
 
   initialText: {
     flex: 1,
-    alignItems: 'center',
-  },
-
-  titleText: {
-    fontSize: 60,
     fontWeight: 'bold',
     // paddingTop: '55%',
     color: theme.colors.primary.oldSafe,
-    fontFamily: theme.fonts.titles,
     letterSpacing: 3,
+  },
+  initialText: {
+    flex: 1,
+    alignItems: 'center',
   },
   subText: {
     fontSize: 26,
@@ -237,6 +241,16 @@ const styles = StyleSheet.create({
   imageContainer: {
     color: theme.colors.primary.background,
     alignItems: 'center',
+  },
+  titleText: {
+    fontSize: 60,
+    fontWeight: 'bold',
+    // paddingTop: '55%',
+    color: theme.colors.primary.oldSafe,
+    fontFamily: theme.fonts.titles,
+    letterSpacing: 3,
+        marginTop: 20,
+
   },
   image: {
     borderColor: 'orange',

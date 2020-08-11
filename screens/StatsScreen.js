@@ -43,7 +43,7 @@ switch (status) {
   // no default
 }
 
-// rec = recommended number of contacts; act = actual number of contacts; first entry = 4 days ago, second entry = 3 days ago, etc.
+// rec = recommended number of contacts; act = actual number of contacts; first entry = 6 days ago, second entry = 5 days ago, etc.
 const contacts = [
   { rec: 33, act: 10 },
   { rec: 30, act: 25 },
@@ -181,6 +181,7 @@ export default function StatsScreen() {
               <VictoryBar data={recBarData} />
             </VictoryStack>
           </VictoryChart>
+
         </View>
 
         {/* <View

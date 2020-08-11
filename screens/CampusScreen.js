@@ -1,6 +1,5 @@
 // import * as WebBrowser from 'expo-web-browser';
 // import { Ionicons } from '@expo/vector-icons';
-import * as React from 'react';
 import {
   Image,
   Platform,
@@ -16,74 +15,26 @@ import {
 } from 'react-native-gesture-handler';
 import theme from '../theme';
 // import { MonoText } from '../components/StyledText';
+import * as React from 'react';
+
 
 export default function CampusScreen() {
+
+
   const houses = [
-    {
-      name: 'CURRIER',
-      imageFile: require('../assets/images/Currier.png'),
-      score: 500,
-    },
-    {
-      name: 'QUINCY',
-      imageFile: require('../assets/images/Quincy.png'),
-      score: 450,
-    },
-    {
-      name: 'WINTHROP',
-      imageFile: require('../assets/images/Winthrop.png'),
-      score: 400,
-    },
-    {
-      name: 'LOWELL',
-      imageFile: require('../assets/images/Lowell.png'),
-      score: 350,
-    },
-    {
-      name: 'ELIOT',
-      imageFile: require('../assets/images/Eliot.png'),
-      score: 330,
-    },
-    {
-      name: 'MATHER',
-      imageFile: require('../assets/images/Mather.png'),
-      score: 300,
-    },
-    {
-      name: 'KIRKLAND',
-      imageFile: require('../assets/images/Kirkland.png'),
-      score: 250,
-    },
-    {
-      name: 'DUNSTER',
-      imageFile: require('../assets/images/Dunster.png'),
-      score: 230,
-    },
-    {
-      name: 'LEVERETT',
-      imageFile: require('../assets/images/Leverett.png'),
-      score: 200,
-    },
-    {
-      name: 'ADAMS',
-      imageFile: require('../assets/images/Adams.png'),
-      score: 150,
-    },
-    {
-      name: 'PFOHO',
-      imageFile: require('../assets/images/Pfoho.png'),
-      score: 100,
-    },
-    {
-      name: 'CABOT',
-      imageFile: require('../assets/images/Cabot.png'),
-      score: 50,
-    },
-    {
-      name: 'DUDLEY',
-      imageFile: require('../assets/images/Dudley.png'),
-      score: 0,
-    },
+    {name: "CURRIER", imageFile: require('../assets/images/Currier.png'), score: 500},
+    {name: "QUINCY", imageFile: require('../assets/images/Quincy.png'), score: 450},
+    {name: "WINTHROP", imageFile: require('../assets/images/Winthrop.png'), score: 400},
+    {name: "LOWELL", imageFile: require('../assets/images/Lowell.png'), score: 350},
+    {name: "ELIOT", imageFile: require('../assets/images/Eliot.png'), score: 330},
+    {name: "MATHER", imageFile: require('../assets/images/Mather.png'), score: 300},
+    {name: "KIRKLAND", imageFile: require('../assets/images/Kirkland.png'), score: 250},
+    {name: "DUNSTER", imageFile: require('../assets/images/Dunster.png'), score: 230},
+    {name: "LEVERETT", imageFile: require('../assets/images/Leverett.png'), score: 200},
+    {name: "ADAMS", imageFile: require('../assets/images/Adams.png'), score: 150},
+    {name: "PFOHO", imageFile: require('../assets/images/Pfoho.png'), score: 100},
+    {name: "CABOT", imageFile: require('../assets/images/Cabot.png'), score: 50},
+    {name: "DUDLEY", imageFile: require('../assets/images/Dudley.png'), score: 0}
   ];
 
   houses.sort((house1, house2) => house2.score - house1.score);
@@ -249,6 +200,8 @@ const styles = StyleSheet.create({
     color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
     letterSpacing: 3,
+        marginTop: 20,
+
   },
   subText: {
     fontSize: 26,

@@ -1,4 +1,4 @@
-import * as WebBrowser from 'expo-web-browser';
+// import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
 import {
   Image,
@@ -50,7 +50,8 @@ export default class WelcomeScreen extends React.Component {
             toValue: 1,
             duration: 3000,
           }).start(({ finished }) => {
-            this.props.navigation.navigate('Sign On')
+            // this.props.navigation.navigate('Sign On')
+            this.props.navigation.navigate('Home');
           });
         });
       });
@@ -89,17 +90,15 @@ WelcomeScreen.navigationOptions = {
   header: null,
 };
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/workflow/development-mode/'
-  );
-}
+// function handleLearnMorePress() {
+//   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
+// }
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
+// function handleHelpPress() {
+//   WebBrowser.openBrowserAsync(
+//     'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+//   );
+// }
 
 const styles = StyleSheet.create({
   container: {
