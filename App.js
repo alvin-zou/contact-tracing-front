@@ -44,7 +44,7 @@ export default function App(props) {
         <View style={styles.container}>
           {/* {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}*/}
           <NavigationContainer linking={LinkingConfiguration}>
-            <Stack.Navigator initialRouteName='Welcome'>
+            <Stack.Navigator initialRouteName='Home' screenOptions={{headerShown: false}}>
               <Stack.Screen name='Root' component={BottomTabNavigator} />
               <Stack.Screen name='Welcome' component={WelcomeScreen} />
               <Stack.Screen name='Sign On' component={SignOnScreen} />
