@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
   initialText: {
     flex: 1,
     alignItems: 'center',
+    marginTop: 20,
   },
 
   titleText: {

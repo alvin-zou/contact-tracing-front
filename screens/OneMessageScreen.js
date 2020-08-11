@@ -127,6 +127,8 @@ const styles = StyleSheet.create({
   initialText: {
     flex: 1,
     alignItems: 'center',
+    marginTop: 50,
+
   },
 
   titleText: {

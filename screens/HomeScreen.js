@@ -63,7 +63,6 @@ export default function HomeScreen() {
         contentContainerStyle={styles.contentContainer}
       >
         {info}
-
         <View style={styles.getStartedContainer}>
           {/* TODO use a switch statement instead of these nested ternary operators */}
           <View style={styles.imageContainer}>
@@ -117,6 +116,7 @@ export default function HomeScreen() {
         </View>
 
         {reportSymptoms}
+        <View style={{height: 50, flex: 1}}></View>
       </ScrollView>
     </View>
   );
@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderWidth: 5,
     borderRadius: 250 / 2,
+    marginTop: 15,
   },
   image: {},
   titleText: {
@@ -217,8 +218,44 @@ const styles = StyleSheet.create({
     height: 50,
   },
   reportText: {
-    fontSize: 20,
+    fontSize: 25,
     color: 'red',
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 1,
+  },
+  infoText: {
+    fontSize: 20,
+    color: theme.colors.primary.background,
+    fontFamily: theme.fonts.secondary,
+    letterSpacing: 1,
+    textDecorationLine: "underline",
+    left: 10,
+    top: 1,
+  },
+  info: {
+    left: 10,
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+
+  report: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignSelf: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: 50,
+    width: "87%",
+    height: 50,
+    borderWidth: 5,
+    borderColor: "white",
+    borderRadius: 50 / 2,
+  },
+  reportText: {
+    fontSize: 20,
+    color: "red",
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
   },
