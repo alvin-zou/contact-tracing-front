@@ -34,7 +34,11 @@ export default function CampusScreen() {
     {name: "ADAMS", imageFile: require('../assets/images/Adams.png'), score: 150},
     {name: "PFOHO", imageFile: require('../assets/images/Pfoho.png'), score: 100},
     {name: "CABOT", imageFile: require('../assets/images/Cabot.png'), score: 50},
-    {name: "DUDLEY", imageFile: require('../assets/images/Dudley.png'), score: 0}
+    {name: "DUDLEY", imageFile: require('../assets/images/Dudley.png'), score: 30},
+    {name: "CRIMSON", imageFile: require('../assets/images/Crimson.png'), score: 20},
+    {name: "ELM", imageFile: require('../assets/images/Elm.png'), score: 10},
+    {name: "IVY", imageFile: require('../assets/images/Ivy.png'), score: 5},
+    {name: "OAK", imageFile: require('../assets/images/Oak.png'), score: 0}
   ];
 
   houses.sort((house1, house2) => house2.score - house1.score);
@@ -52,7 +56,6 @@ export default function CampusScreen() {
       alignItems: 'center',
       position: 'absolute',
       left: 50 * (index + 2),
-      top: 20,
     };
   };
 
@@ -61,7 +64,7 @@ export default function CampusScreen() {
       <View
         style={{
           width: 2,
-          height: 130 * houses.length + 260,
+          height: 100 * (houses.length),
           backgroundColor: '#E8E8E8',
         }}
       />
@@ -88,7 +91,7 @@ export default function CampusScreen() {
       height: 25,
       width: getPercent(score),
       position: 'absolute',
-      top: 45,
+      top: 25,
       left: 50,
     };
   };
@@ -105,7 +108,6 @@ export default function CampusScreen() {
           alignItems: 'center',
           height: 100,
           width: 100,
-          top: 20,
           right: 0,
         }}
       >
@@ -137,16 +139,16 @@ export default function CampusScreen() {
 
   return (
     <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        <View style={styles.initialText}>
+      <View style={styles.initialText}>
           <Text style={styles.titleText}>campus</Text>
           <Text style={styles.subText}>TOTAL SCORE</Text>
-        </View>
+      </View>
 
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        
         <View style={{ flex: 1 }}>
           {showScoreLabel}
           {displayHouses}
-          <View style={{ width: 50, height: 75 }} />
         </View>
       </ScrollView>
 
@@ -184,13 +186,15 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   contentContainer: {
-    paddingTop: 30,
     justifyContent: 'flex-start',
   },
 
   initialText: {
-    flex: 1,
+    height: 150,
     alignItems: 'center',
+    alignSelf: 'center',
+    marginTop: 20,
+    backgroundColor: "white"
   },
 
   titleText: {

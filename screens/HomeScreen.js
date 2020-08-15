@@ -14,7 +14,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme';
 // import { MonoText } from '../components/StyledText';
 
-const status = 'safe'; // safe, limited, restricted, quarantined
+const status = 'limited'; // safe, limited, restricted, quarantined
 
 export default function HomeScreen() {
   // const [showInfo, setShowInfo] = useState(false);
@@ -23,27 +23,48 @@ export default function HomeScreen() {
   //   setShowInfo(true);
   // }
 
-  const infoAlert = () => {
-    Alert.alert(
-      'Safe Screen',
-      "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
-      [{ text: 'CLOSE', style: 'cancel' }]
-    );
+  const infoAlert = (status) => {
+    if (status === 'safe') {
+      Alert.alert(
+        'Safe Screen',
+        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        [{ text: 'CLOSE', style: 'cancel' }]
+      );
+    }
+    else if (status === 'limited') {
+      Alert.alert(
+        'Limited Screen',
+        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        [{ text: 'CLOSE', style: 'cancel' }]
+      );
+    }
+    else if (status === 'restricted') {
+      Alert.alert(
+        'Restricted Screen',
+        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        [{ text: 'CLOSE', style: 'cancel' }]
+      );
+    }
+    else if (status === 'quarantined') {
+      Alert.alert(
+        'Quarantined Screen',
+        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        [{ text: 'CLOSE', style: 'cancel' }]
+      );
+    }
+    else {
+      Alert.alert(
+        "Error?", "This message should not display.",
+        [{ text: 'CLOSE', style: 'cancel' }]
+      );
+    }
+    
   };
 
-  let info;
   let reportSymptoms;
 
-  if (status === 'safe') {
-    info = (
-      <TouchableOpacity style={styles.info} onPress={infoAlert}>
-        <Ionicons name="ios-information-circle" size={30} color="white" />
-        <Text style={styles.infoText}>MORE INFO</Text>
-      </TouchableOpacity>
-    );
-  }
   reportSymptoms = (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={() => Alert.alert("Not working yet.")}>
       <View style={styles.report}>
         <Ionicons
           name="md-add-circle"
@@ -62,7 +83,11 @@ export default function HomeScreen() {
         style={styles.container}
         contentContainerStyle={styles.contentContainer}
       >
-        {info}
+        <TouchableOpacity style={styles.info} onPress={() => infoAlert(status)}>
+          <Ionicons name="ios-information-circle" size={30} color="white" />
+          <Text style={styles.infoText}>MORE INFO</Text>
+        </TouchableOpacity>
+        
         <View style={styles.getStartedContainer}>
           {/* TODO use a switch statement instead of these nested ternary operators */}
           <View style={styles.imageContainer}>
@@ -76,7 +101,7 @@ export default function HomeScreen() {
                 ? '../assets/images/StayHome.png'
                 : status === 'quarantined'
                 ? '../assets/images/Quarantine.png'
-                : 'black')}
+                : '../assets/images/icon.png')}
             />
           </View>
 
