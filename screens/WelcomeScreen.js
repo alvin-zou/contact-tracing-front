@@ -2,6 +2,7 @@
 import * as React from 'react';
 import {
   Image,
+  Button,
   Platform,
   StyleSheet,
   Text,
@@ -23,16 +24,19 @@ export default class WelcomeScreen extends React.Component {
     };
   }
 
+
   fadeIn = (anim, fn) =>
     Animated.timing(anim, {
       toValue: 1,
       duration: 1000,
+      useNativeDriver: false,
     }).start(fn);
 
   fadeOut = (anim, fn) =>
     Animated.timing(anim, {
       toValue: 0,
       duration: 1000,
+      useNativeDriver: false,
     }).start(fn);
 
   componentDidMount() {
@@ -43,15 +47,16 @@ export default class WelcomeScreen extends React.Component {
     Animated.timing(this.state.fadeFirstText, {
       toValue: 1,
       duration: 3000 /* <--- modify for initial text time */,
+      useNativeDriver: false,
     }).start(({ finished }) => {
       this.fadeOut(this.state.fadeFirstText, ({ finished }) => {
         this.fadeIn(this.state.fadeSecondText, ({ finished }) => {
           Animated.timing(this.state.fadeSecondText, {
             toValue: 1,
             duration: 3000,
+            useNativeDriver: false,
           }).start(({ finished }) => {
-            // this.props.navigation.navigate('Sign On')
-            this.props.navigation.navigate('Home');
+            this.props.navigation.navigate('Sign On')
           });
         });
       });
@@ -61,20 +66,21 @@ export default class WelcomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+       
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
           <View style={styles.getStartedContainer}>
             <Text style={styles.welcomeText}>welcome</Text>
-            <View style={{ alignItems: 'center' }}>
+            <View style={{alignItems: 'center', flex: 1}}>
               <Animated.Text
-                style={[styles.subText, { opacity: this.state.fadeFirstText }]}
+                style={[styles.subText, { opacity: this.state.fadeFirstText}]}
               >
                 JUST A QUICK SURVEY TO GET STARTED
               </Animated.Text>
               <Animated.Text
-                style={[styles.subText, { opacity: this.state.fadeSecondText }]}
+                style={[styles.subText, { opacity: this.state.fadeSecondText, position: 'absolute'}]}
               >
                 YOU CAN UPDATE YOUR RESPONSES AT ANY TIME
               </Animated.Text>
@@ -132,7 +138,6 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.secondary,
     textAlign: 'center',
     letterSpacing: 3,
-    position: 'absolute',
   },
   tabBarInfoContainer: {
     position: 'absolute',
