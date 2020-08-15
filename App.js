@@ -13,7 +13,6 @@ import LinkingConfiguration from './navigation/LinkingConfiguration';
 import WelcomeScreen from './screens/WelcomeScreen';
 import OneMessageScreen from './screens/OneMessageScreen';
 import SignOnScreen from './screens/SignOnScreen';
-import SurveyScreen from './screens/SurveyScreen';
 
 const Stack = createStackNavigator();
 var uid;
@@ -44,11 +43,10 @@ export default function App(props) {
         <View style={styles.container}>
           {/* {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}*/}
           <NavigationContainer linking={LinkingConfiguration}>
-            <Stack.Navigator initialRouteName='Home' screenOptions={{headerShown: false}}>
+            <Stack.Navigator initialRouteName='Welcome' screenOptions={{headerShown: false}}>
               <Stack.Screen name='Root' component={BottomTabNavigator} />
               <Stack.Screen name='Welcome' component={WelcomeScreen} />
               <Stack.Screen name='Sign On' component={SignOnScreen} />
-              <Stack.Screen name='Survey' component={SurveyScreen} />
               <Stack.Screen name='OneMessage' component={OneMessageScreen} />
             </Stack.Navigator>
           </NavigationContainer>
