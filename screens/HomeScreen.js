@@ -27,28 +27,28 @@ export default function HomeScreen() {
     if (status === 'safe') {
       Alert.alert(
         'Safe Screen',
-        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        "You have not come into contact with any infected people, and you have not reported any symptoms. You have been social distancing to mitigate the spread of the virus. Keep it up!",
         [{ text: 'CLOSE', style: 'cancel' }]
       );
     }
     else if (status === 'limited') {
       Alert.alert(
         'Limited Screen',
-        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        "You have not come into contact with any infected people or reported any symptoms, but we have detected an unusually high number of social interactions for your device today which puts you at a slightly elevated risk. Please practie safe social distancing, and thank you for keeping Harvard safe.",
         [{ text: 'CLOSE', style: 'cancel' }]
       );
     }
     else if (status === 'restricted') {
       Alert.alert(
         'Restricted Screen',
-        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        "You have come into contact with someone who tested positive, or you recently reported symptoms. In order to keep Harvard safe, we ask that you quarantine in your room until further notice. Please avoid all non-essential interpersonal contact, and seek medical attention if you develop serious symptoms.",
         [{ text: 'CLOSE', style: 'cancel' }]
       );
     }
     else if (status === 'quarantined') {
       Alert.alert(
         'Quarantined Screen',
-        "A safe screen means that you've interacted with few (if any) infectious people since your last diagonistic test. So we're not asking you to quarantine. As always, continue to follow our social distancing guidelines, and let us know if you feel unwell.",
+        "You have tested positive. In order to keep Harvard safe, we ask that you quarantine in your room until further notice. Please avoid all non-essential interpoersonal contact, and seek medical attention if you develop serious symptoms.",
         [{ text: 'CLOSE', style: 'cancel' }]
       );
     }
