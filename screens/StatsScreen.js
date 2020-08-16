@@ -119,7 +119,7 @@ const getColor = (act, rec) => {
 const infoAlert = () => {
   Alert.alert(
     'Cumulative Score',
-    'Your cumulative score is meant to give you prev sense of how consistently you met the social distancing limits and guidelines.',
+    "Each day, we calculate a recommended number of daily contacts per person in order to minimize the probability of an outbreak. If you stay below today's recommended Number, your cumulative score increases by one.",
     [{ text: 'CLOSE', style: 'cancel' }]
   );
 };
