@@ -60,3 +60,7 @@ buck-out/
 
 # package-lock
 package-lock.json
+
+.expo/settings.json
+
+.expo/packager-info.json

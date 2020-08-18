@@ -1,45 +1,110 @@
-import * as WebBrowser from 'expo-web-browser';
+// import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Button,
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Animated,
+  Easing,
+} from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import theme from '../theme.js';
+import theme from '../theme';
 import { MonoText } from '../components/StyledText';
 
-export default function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+export default class WelcomeScreen extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      fadeFirstText: new Animated.Value(1),
+      fadeSecondText: new Animated.Value(0),
+    };
+  }
 
-        <View style={styles.getStartedContainer}>
 
-          <Text style={styles.welcomeText}>
-            welcome
-          </Text>
-          <Text style={styles.subText}>
-            JUST A QUICK SURVEY TO GET STARTED
-          </Text>
+  fadeIn = (anim, fn) =>
+    Animated.timing(anim, {
+      toValue: 1,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start(fn);
 
-        </View>
+  fadeOut = (anim, fn) =>
+    Animated.timing(anim, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: false,
+    }).start(fn);
 
-      </ScrollView>
+  componentDidMount() {
+    this.animate();
+  }
 
-    </View>
-  );
+  animate() {
+    Animated.timing(this.state.fadeFirstText, {
+      toValue: 1,
+      duration: 3000 /* <--- modify for initial text time */,
+      useNativeDriver: false,
+    }).start(({ finished }) => {
+      this.fadeOut(this.state.fadeFirstText, ({ finished }) => {
+        this.fadeIn(this.state.fadeSecondText, ({ finished }) => {
+          Animated.timing(this.state.fadeSecondText, {
+            toValue: 1,
+            duration: 3000,
+            useNativeDriver: false,
+          }).start(({ finished }) => {
+            this.props.navigation.navigate('Sign On')
+          });
+        });
+      });
+    });
+  }
+
+  render() {
+    return (
+      <View style={styles.container}>
+       
+        <ScrollView
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+        >
+          <View style={styles.getStartedContainer}>
+            <Text style={styles.welcomeText}>welcome</Text>
+            <View style={{alignItems: 'center', flex: 1}}>
+              <Animated.Text
+                style={[styles.subText, { opacity: this.state.fadeFirstText}]}
+              >
+                JUST A QUICK SURVEY TO GET STARTED
+              </Animated.Text>
+              <Animated.Text
+                style={[styles.subText, { opacity: this.state.fadeSecondText, position: 'absolute'}]}
+              >
+                YOU CAN UPDATE YOUR RESPONSES AT ANY TIME
+              </Animated.Text>
+            </View>
+          </View>
+        </ScrollView>
+      </View>
+    );
+  }
 }
 
-HomeScreen.navigationOptions = {
+WelcomeScreen.navigationOptions = {
   header: null,
 };
 
-function handleLearnMorePress() {
-  WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
-}
+// function handleLearnMorePress() {
+//   WebBrowser.openBrowserAsync('https://docs.expo.io/versions/latest/workflow/development-mode/');
+// }
 
-function handleHelpPress() {
-  WebBrowser.openBrowserAsync(
-    'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
-  );
-}
+// function handleHelpPress() {
+//   WebBrowser.openBrowserAsync(
+//     'https://docs.expo.io/versions/latest/get-started/create-a-new-app/#making-your-first-change'
+//   );
+// }
 
 const styles = StyleSheet.create({
   container: {
@@ -59,7 +124,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 50,
   },
   welcomeText: {
-    fontSize: 60,
+    fontSize: 50,
     fontWeight: 'bold',
     paddingTop: '80%',
     color: theme.colors.primary.safe,
