@@ -1,43 +1,93 @@
-// import { Ionicons } from '@expo/vector-icons';
-// import * as WebBrowser from 'expo-web-browser';
+import { Ionicons } from '@expo/vector-icons';
+import * as WebBrowser from 'expo-web-browser';
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { RectButton, ScrollView } from 'react-native-gesture-handler';
+import theme from '../theme.js';
 
-export default function HealthScreen() {
+class ToggleButton extends React.Component {
+
+  render() {
+    return (
+      <TouchableHighlight underlayColor='red' style={styles.container} onPress={this.props.onPress}>
+        <View style={{ flexDirection: 'row' }}>
+          <View style={styles.optionIconContainer}>
+            <Ionicons size={22} color="rgba(0,0,0,0.35)" />
+          </View>
+          <View style={styles.optionTextContainer}>
+            <Text style={styles.optionText}>{this.props.label}</Text>
+          </View>
+        </View>
+      </TouchableHighlight>
+    );
+  }
+}
+
+
+export default function SymptomScreen() {
   return (
-    <View>
-      
-    </View>
-  //   <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
-  //     <OptionButton
-  //       icon="md-school"
-  //       label="Read the Expo documentation"
-  //       onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
-  //     />
+    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+      <View style={styles.contentContainer}>
+        <Text style={styles.welcomeText}>
+          unwell?
+        </Text>
+        <Text style={styles.subText}>
+          LET US KNOW
+        </Text>
+      </View>
+      <ToggleButton label='test' />
 
-  //     <OptionButton
-  //       icon="md-compass"
-  //       label="Read the React Navigation documentation"
-  //       onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
-  //     />
+      <OptionButton
+        // icon="fever-chills"
+        label="FEVER OR CHILLS"
+        // highlight ??
+        onPress={() => WebBrowser.openBrowserAsync('https://docs.expo.io')}
+      />
 
-  //     <OptionButton
-  //       icon="ios-chatboxes"
-  //       label="Ask a question on the forums"
-  //       onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
-  //       isLastOption
-  //     />
-  //   </ScrollView>
+      <OptionButton
+        // icon="cough"
+        label="COUGH"
+        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+      />
+
+      <OptionButton
+        // icon="short-of-breath"
+        label="SHORT OF BREATH"
+        onPress={() => WebBrowser.openBrowserAsync('https://forums.expo.io')}
+        isLastOption
+      />
+
+      <OptionButton
+        // icon="fatigue"
+        label="FATIGUE"
+        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+      />
+
+      <OptionButton
+        // icon="other"
+        label="OTHER"
+        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+      />
+
+      {/* needs padding */}
+      <OptionButton
+        // icon="report-symptoms"
+        label="REPORT SYMPTOMS"
+        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+      />
+
+      <View style={styles.contentContainer}>
+        <Text style={styles.welcomeText}>
+          contacts
+        </Text>
+      </View>
+    </ScrollView>
   );
 }
 
 function OptionButton({ icon, label, onPress, isLastOption }) {
   return (
-    <RectButton
-      style={[styles.option, isLastOption && styles.lastOption]}
-      onPress={onPress}
-    >
+    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
       <View style={{ flexDirection: 'row' }}>
         <View style={styles.optionIconContainer}>
           <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
@@ -56,7 +106,28 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
   },
   contentContainer: {
-    paddingTop: 15,
+    paddingVertical: 0,
+  },
+  getStartedContainer: {
+    paddingTop: 0,
+    alignItems: 'center',
+  },
+  welcomeText: {
+    fontSize: 60,
+    fontWeight: 'bold',
+    paddingTop: '20%',
+    color: theme.colors.primary.safe,
+    fontFamily: theme.fonts.titles,
+    textAlign: 'center',
+    letterSpacing: 3,
+  },
+  subText: {
+    fontSize: 26,
+    color: theme.colors.fonts.dark,
+    fontFamily: theme.fonts.secondary,
+    textAlign: 'center',
+    letterSpacing: 3,
+    paddingBottom: 30
   },
   optionIconContainer: {
     marginRight: 12,
@@ -74,7 +145,8 @@ const styles = StyleSheet.create({
   },
   optionText: {
     fontSize: 15,
+    justifyContent: 'center',
     alignSelf: 'flex-start',
-    marginTop: 1,
-  },
+    marginTop: 1
+  }
 });
