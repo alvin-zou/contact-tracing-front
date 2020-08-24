@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   View,
   Alert,
+  Dimensions,
 } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
@@ -15,10 +16,11 @@ import {
   VictoryBar,
   VictoryChart,
   VictoryTheme,
-  VictoryPie,
   VictoryStack,
   VictoryLegend,
 } from 'victory-native';
+
+import StatsDonutChart from '../components/StatsDonutChart';
 import theme from '../theme';
 // import { Dimensions, TouchableHighlight } from "react-native";
 // import { MonoText } from '../components/StyledText';
@@ -140,6 +142,7 @@ const infoAlert = () => {
 //   `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
 //   `L 0 0`,
 // ].join(" ");
+const { height, width } = Dimensions.get('window');
 
 export default function StatsScreen() {
   return (
@@ -151,9 +154,32 @@ export default function StatsScreen() {
         <View style={styles.getStartedContainer}>
           <Text style={styles.titleText}>stats</Text>
           <Text style={styles.subText}>TODAY'S CONTACTS</Text>
-          <VictoryPie
-            colorScale={['tomato', 'orange', 'gold']}
+          <StatsDonutChart
+            width={width}
+            height={width}
+            innerRadius={70}
+            padAngle={3}
+            colorScale={['#A4D38D', '#A784E2', '#3E77BA', '#EFA148']}
+            labelStyle={[
+              {
+                fontSize: 65,
+                fill: theme.colors.primary.oldSafe,
+                letterSpacing: 10,
+                fontWeight: 'bold',
+              },
+              {
+                fontWeight: '600',
+                fontSize: 23,
+                fill: theme.colors.fonts.dark,
+              },
+              {
+                fontWeight: '600',
+                fontSize: 23,
+                fill: theme.colors.fonts.dark,
+              },
+            ]}
             data={pieChartData}
+            centerLabelText={['200', 'POINTS FOR', 'CURRIER']}
           />
         </View>
 
@@ -181,7 +207,6 @@ export default function StatsScreen() {
               <VictoryBar data={recBarData} />
             </VictoryStack>
           </VictoryChart>
-
         </View>
 
         {/* <View
