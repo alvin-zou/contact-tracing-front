@@ -37,7 +37,7 @@ export default function MessagesScreen({ route, navigation }) {
     },
   ]);
 
-  const dotStyle = (read) => {
+  const dotStyle = read => {
     if (!read) {
       return {
         height: 17,
@@ -56,7 +56,7 @@ export default function MessagesScreen({ route, navigation }) {
     };
   };
 
-  const openMessage = (ind) => {
+  const openMessage = ind => {
     const newMessages = messages.slice();
     newMessages[ind].read = true;
     setMessages(newMessages);
