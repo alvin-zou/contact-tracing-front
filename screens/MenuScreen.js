@@ -154,7 +154,7 @@ export default function MenuScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.initialText}>
           <Text style={styles.titleText}>menu</Text>
-          <View style={{height: 10, flex: 1}}></View>
+          <View style={{ height: 10, flex: 1 }} />
           <Text style={styles.subText}>PROFILE</Text>
         </View>
 
@@ -168,10 +168,9 @@ export default function MenuScreen({ navigation }) {
           </Text> */}
         </View>
 
-        <View style={{height: 10, flex: 1}}></View>
+        <View style={{ height: 10, flex: 1 }} />
         <Text style={styles.subText}>ABOUT</Text>
-        <View style={{height: 10, flex: 1}}></View>
-
+        <View style={{ height: 10, flex: 1 }} />
 
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           {displayFirstRow}
@@ -249,8 +248,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
     letterSpacing: 3,
-        marginTop: 20,
-
+    marginTop: 20,
   },
   image: {
     borderColor: 'orange',

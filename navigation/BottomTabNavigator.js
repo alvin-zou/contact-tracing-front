@@ -22,7 +22,7 @@ export default function BottomTabNavigator({ navigation, route }) {
   // https://reactnavigation.org/docs/en/screen-options-resolution.html
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
-  let unreadMessage = false;
+  const unreadMessage = false;
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -88,7 +88,9 @@ export default function BottomTabNavigator({ navigation, route }) {
         component={LogoutScreen}
         options={{
           title: 'Logout',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
+          tabBarIcon: ({ focused }) => (
+            <TabBarIcon focused={focused} name="md-person" />
+          ),
         }}
       />
     </BottomTab.Navigator>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { VictoryPie, VictoryLabel } from 'victory-native';
+import { VictoryPie, VictoryLabel, VictoryTheme } from 'victory-native';
 import Svg from 'react-native-svg';
 
 function StatsDonutChart({
@@ -18,6 +18,7 @@ function StatsDonutChart({
   return (
     <Svg height={height} width={width}>
       <VictoryPie
+        theme={VictoryTheme.material}
         standalone={false}
         data={data}
         innerRadius={height * 0.25}

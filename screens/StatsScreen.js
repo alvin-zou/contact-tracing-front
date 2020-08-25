@@ -5,31 +5,24 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
   Alert,
   Dimensions,
 } from 'react-native';
+import { Toggle, Layout } from '@ui-kitten/components';
 import { ScrollView } from 'react-native-gesture-handler';
 
-import {
-  VictoryBar,
-  VictoryChart,
-  VictoryTheme,
-  VictoryStack,
-  VictoryLegend,
-} from 'victory-native';
-
 import StatsDonutChart from '../components/StatsDonutChart';
+import StatsBarChart from '../components/StatsBarChart';
 import theme from '../theme';
-// import { Dimensions, TouchableHighlight } from "react-native";
-// import { MonoText } from '../components/StyledText';
 
-const status = 'safe';
+const healthStatus = 'safe';
+
+const { height, width } = Dimensions.get('window');
 
 let statusColor = '';
 
-switch (status) {
+switch (healthStatus) {
   case 'safe':
     statusColor = theme.colors.primary.safe;
     break;
@@ -142,9 +135,15 @@ const infoAlert = () => {
 //   `A 1 1 0 ${largeArcFlag} 1 ${endX} ${endY}`,
 //   `L 0 0`,
 // ].join(" ");
-const { height, width } = Dimensions.get('window');
 
-export default function StatsScreen() {
+const StatsScreen = () => {
+  const [showDonut, setShowDonut] = React.useState(false);
+
+  const onActiveCheckedChange = isChecked => {
+    setShowDonut(isChecked);
+  };
+
+  console.log('showDonut', showDonut);
   return (
     <View style={styles.container}>
       <ScrollView
@@ -153,147 +152,61 @@ export default function StatsScreen() {
       >
         <View style={styles.getStartedContainer}>
           <Text style={styles.titleText}>stats</Text>
-          <Text style={styles.subText}>TODAY'S CONTACTS</Text>
-          <StatsDonutChart
-            width={width}
-            height={width}
-            innerRadius={70}
-            padAngle={3}
-            colorScale={['#A4D38D', '#A784E2', '#3E77BA', '#EFA148']}
-            labelStyle={[
-              {
-                fontSize: 65,
-                fill: theme.colors.primary.oldSafe,
-                letterSpacing: 10,
-                fontWeight: 'bold',
-              },
-              {
-                fontWeight: '600',
-                fontSize: 23,
-                fill: theme.colors.fonts.dark,
-              },
-              {
-                fontWeight: '600',
-                fontSize: 23,
-                fill: theme.colors.fonts.dark,
-              },
-            ]}
-            data={pieChartData}
-            centerLabelText={['200', 'POINTS FOR', 'CURRIER']}
-          />
         </View>
-
-        <View style={styles.initialText}>
-          <Text style={styles.titleText}>personal</Text>
-        </View>
-        <Text style={styles.subText}>WEEKLY STATISTICS</Text>
-
-        <View style={styles.container}>
-          <VictoryChart width={350} theme={VictoryTheme.material}>
-            <VictoryLegend
-              x={125}
-              y={50}
-              centerTitle
-              orientation="horizontal"
-              gutter={20}
-              style={{ border: { stroke: 'black' }, title: { fontSize: 20 } }}
-              data={[
-                { name: 'Actual', symbol: { fill: 'tomato' } },
-                { name: 'Recommended', symbol: { fill: 'orange' } },
+        <View>
+          <Layout style={styles.layoutContainer}>
+            <Layout style={styles.layoutLabel} level="1">
+              <Text>Bar</Text>
+            </Layout>
+            <Layout style={styles.layoutSwitch} level="2">
+              <Toggle
+                style={styles.toggle}
+                checked={showDonut}
+                onChange={onActiveCheckedChange}
+              />
+            </Layout>
+            <Layout style={styles.layoutLabel} level="3">
+              <Text>Donut</Text>
+            </Layout>
+          </Layout>
+          {showDonut ? (
+            <StatsDonutChart
+              width={width}
+              height={width}
+              innerRadius={70}
+              padAngle={3}
+              colorScale={['#A4D38D', '#A784E2', '#3E77BA', '#EFA148']}
+              labelStyle={[
+                {
+                  fontSize: 65,
+                  fill: theme.colors.primary.oldSafe,
+                  letterSpacing: 10,
+                  fontWeight: 'bold',
+                },
+                {
+                  fontWeight: '600',
+                  fontSize: 23,
+                  fill: theme.colors.fonts.dark,
+                },
+                {
+                  fontWeight: '600',
+                  fontSize: 23,
+                  fill: theme.colors.fonts.dark,
+                },
               ]}
+              data={pieChartData}
+              centerLabelText={['200', 'POINTS FOR', 'CURRIER']}
             />
-            <VictoryStack colorScale={['tomato', 'orange']}>
-              <VictoryBar data={actBarData} />
-              <VictoryBar data={recBarData} />
-            </VictoryStack>
-          </VictoryChart>
+          ) : (
+            <StatsBarChart actBarData={actBarData} recBarData={recBarData} />
+          )}
         </View>
-
-        {/* <View
-          style={{
-            alignItems: "center",
-            flex: 1,
-            height: 300,
-            flexDirection: "column",
-          }}
-        >
-          <View
-            style={{
-              width: 2,
-              height: 125,
-              backgroundColor: "black",
-              top: 10,
-              left: "85%",
-              position: "absolute",
-            }}
-          ></View>
-          <View
-            style={{
-              width: "70%",
-              height: 2,
-              backgroundColor: "gainsboro",
-              marginTop: 25,
-            }}
-          ></View>
-          <View
-            style={{
-              width: "70%",
-              height: 2,
-              backgroundColor: "gainsboro",
-              marginTop: 25,
-            }}
-          ></View>
-          <View
-            style={{
-              width: "70%",
-              height: 2,
-              backgroundColor: "gainsboro",
-              marginTop: 25,
-            }}
-          ></View>
-          <View
-            style={{
-              width: "70%",
-              height: 2,
-              backgroundColor: "gainsboro",
-              marginTop: 25,
-            }}
-          ></View>
-
-          {displayDates}
-          <View
-            style={{
-              width: "70%",
-              height: 2,
-              backgroundColor: "black",
-              marginTop: 25,
-            }}
-          ></View>
-        </View> 
-        {displayScale} */}
-
-        <Text style={styles.subText}>CUMULATIVE SCORE</Text>
-        <View style={styles.initialText}>
-          <Text style={styles.titleText}>{getCumulScore()}</Text>
-        </View>
-        <TouchableOpacity onPress={infoAlert}>
-          <Text
-            style={[
-              styles.subText,
-              {
-                fontSize: 20,
-                letterSpacing: 1,
-                textDecorationLine: 'underline',
-              },
-            ]}
-          >
-            WHAT'S THIS?
-          </Text>
-        </TouchableOpacity>
       </ScrollView>
     </View>
   );
-}
+};
+
+export default StatsScreen;
 
 StatsScreen.navigationOptions = {
   header: null,
@@ -312,6 +225,22 @@ StatsScreen.navigationOptions = {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
+  },
+  layoutContainer: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  layoutLabel: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
+  layoutSwitch: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: 'white',
   },
   contentContainer: {
@@ -334,6 +263,8 @@ const styles = StyleSheet.create({
   },
   getStartedContainer: {
     alignItems: 'center',
+    borderBottomColor: theme.colors.fonts.dark,
+    borderBottomWidth: StyleSheet.hairlineWidth,
 
     // marginHorizontal: status === "quarantined" ? 23 : 15,
   },
@@ -356,8 +287,10 @@ const styles = StyleSheet.create({
     color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
     textAlign: 'center',
-    paddingTop: '3%',
+    paddingTop: '6%',
     letterSpacing: 3,
+    borderBottomColor: theme.colors.fonts.dark,
+    borderBottomWidth: StyleSheet.hairlineWidth,
   },
   subText: {
     fontSize: 26,
@@ -366,7 +299,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.secondary,
     textAlign: 'center',
     letterSpacing: 3,
-    marginHorizontal: status === 'restricted' ? 10 : 8,
+    marginHorizontal: healthStatus === 'restricted' ? 10 : 8,
   },
   tabBarInfoContainer: {
     position: 'absolute',

@@ -23,48 +23,42 @@ export default function HomeScreen() {
   //   setShowInfo(true);
   // }
 
-  const infoAlert = (status) => {
+  const infoAlert = status => {
     if (status === 'safe') {
       Alert.alert(
         'Safe Screen',
-        "You have not come into contact with any infected people, and you have not reported any symptoms. You have been social distancing to mitigate the spread of the virus. Keep it up!",
+        'You have not come into contact with any infected people, and you have not reported any symptoms. You have been social distancing to mitigate the spread of the virus. Keep it up!',
         [{ text: 'CLOSE', style: 'cancel' }]
       );
-    }
-    else if (status === 'limited') {
+    } else if (status === 'limited') {
       Alert.alert(
         'Limited Screen',
-        "You have not come into contact with any infected people or reported any symptoms, but we have detected an unusually high number of social interactions for your device today which puts you at a slightly elevated risk. Please practie safe social distancing, and thank you for keeping Harvard safe.",
+        'You have not come into contact with any infected people or reported any symptoms, but we have detected an unusually high number of social interactions for your device today which puts you at a slightly elevated risk. Please practie safe social distancing, and thank you for keeping Harvard safe.',
         [{ text: 'CLOSE', style: 'cancel' }]
       );
-    }
-    else if (status === 'restricted') {
+    } else if (status === 'restricted') {
       Alert.alert(
         'Restricted Screen',
-        "You have come into contact with someone who tested positive, or you recently reported symptoms. In order to keep Harvard safe, we ask that you quarantine in your room until further notice. Please avoid all non-essential interpersonal contact, and seek medical attention if you develop serious symptoms.",
+        'You have come into contact with someone who tested positive, or you recently reported symptoms. In order to keep Harvard safe, we ask that you quarantine in your room until further notice. Please avoid all non-essential interpersonal contact, and seek medical attention if you develop serious symptoms.',
         [{ text: 'CLOSE', style: 'cancel' }]
       );
-    }
-    else if (status === 'quarantined') {
+    } else if (status === 'quarantined') {
       Alert.alert(
         'Quarantined Screen',
-        "You have tested positive. In order to keep Harvard safe, we ask that you quarantine in your room until further notice. Please avoid all non-essential interpoersonal contact, and seek medical attention if you develop serious symptoms.",
+        'You have tested positive. In order to keep Harvard safe, we ask that you quarantine in your room until further notice. Please avoid all non-essential interpoersonal contact, and seek medical attention if you develop serious symptoms.',
         [{ text: 'CLOSE', style: 'cancel' }]
       );
+    } else {
+      Alert.alert('Error?', 'This message should not display.', [
+        { text: 'CLOSE', style: 'cancel' },
+      ]);
     }
-    else {
-      Alert.alert(
-        "Error?", "This message should not display.",
-        [{ text: 'CLOSE', style: 'cancel' }]
-      );
-    }
-    
   };
 
   let reportSymptoms;
 
   reportSymptoms = (
-    <TouchableOpacity onPress={() => Alert.alert("Not working yet.")}>
+    <TouchableOpacity onPress={() => Alert.alert('Not working yet.')}>
       <View style={styles.report}>
         <Ionicons
           name="md-add-circle"
@@ -87,7 +81,7 @@ export default function HomeScreen() {
           <Ionicons name="ios-information-circle" size={30} color="white" />
           <Text style={styles.infoText}>MORE INFO</Text>
         </TouchableOpacity>
-        
+
         <View style={styles.getStartedContainer}>
           {/* TODO use a switch statement instead of these nested ternary operators */}
           <View style={styles.imageContainer}>
@@ -141,7 +135,7 @@ export default function HomeScreen() {
         </View>
 
         {reportSymptoms}
-        <View style={{height: 50, flex: 1}}></View>
+        <View style={{ height: 50, flex: 1 }} />
       </ScrollView>
     </View>
   );
@@ -253,34 +247,34 @@ const styles = StyleSheet.create({
     color: theme.colors.primary.background,
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
     left: 10,
     top: 1,
   },
   info: {
     left: 10,
-    flexDirection: "row",
-    justifyContent: "flex-start",
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
     marginTop: 10,
     marginBottom: 10,
   },
 
   report: {
-    flexDirection: "row",
-    justifyContent: "center",
-    alignSelf: "center",
-    alignItems: "center",
-    backgroundColor: "white",
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
     marginTop: 50,
-    width: "87%",
+    width: '87%',
     height: 50,
     borderWidth: 5,
-    borderColor: "white",
+    borderColor: 'white',
     borderRadius: 50 / 2,
   },
   reportText: {
     fontSize: 20,
-    color: "red",
+    color: 'red',
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
   },

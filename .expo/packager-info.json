@@ -3,8 +3,8 @@
   "expoServerPort": 19000,
   "expoServerNgrokUrl": "https://fi-gf8.anonymous.contact-tracing-front.exp.direct",
   "packagerNgrokUrl": "https://packager.fi-gf8.anonymous.contact-tracing-front.exp.direct",
-  "ngrokPid": 5985,
+  "ngrokPid": 15269,
   "packagerPort": 19001,
-  "packagerPid": 5958,
+  "packagerPid": 15242,
   "devToolsPort": 19002
 }

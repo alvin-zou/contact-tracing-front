@@ -1,64 +1,110 @@
 import * as React from 'react';
-import { Text, TextInput, View, Button, Platform, StyleSheet, Alert, TouchableOpacity } from 'react-native';
-import theme from '../theme.js';
+import {
+  Text,
+  TextInput,
+  View,
+  Button,
+  Platform,
+  StyleSheet,
+  Alert,
+  TouchableOpacity,
+} from 'react-native';
 import firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
+import theme from '../theme.js';
 
 export default class LogoutScreen extends React.Component {
-    constructor(props) {
-        super(props);
-        this.logout = async () => {
-            firebase.auth().signOut().then(function() {
-                console.log('You\'ve been signed out!');
-                props.navigation.navigate('Sign On');
-              }).catch(function(error) {
-                console.error(error);
-              });
-        }
-      }
+  constructor(props) {
+    super(props);
+    this.logout = async () => {
+      firebase
+        .auth()
+        .signOut()
+        .then(function () {
+          console.log("You've been signed out!");
+          props.navigation.navigate('Sign On');
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    };
+  }
 
   render() {
     return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.contentContainer}>
+          <View style={styles.initialText}>
+            <Text style={styles.titleText}>logout</Text>
+            <Text style={styles.subText}>
+              {' '}
+              Are you sure you want to logout?{' '}
+            </Text>
+          </View>
 
+          {/* <Button title='Yes' onPress={this.logout}></Button> */}
 
+          <View
+            style={{
+              flexDirection: 'row',
+              flex: 1,
+              alignContent: 'center',
+              justifyContent: 'center',
+              marginVertical: 20,
+            }}
+          >
+            <TouchableOpacity
+              onPress={this.logout}
+              style={{
+                marginHorizontal: 20,
+                backgroundColor: '#E8E8E8',
+                marginBottom: 20,
+                height: 50,
+                width: 100,
+                borderRadius: 10,
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 24,
+                  alignSelf: 'center',
+                  color: 'black',
+                  fontFamily: theme.fonts.secondary,
+                }}
+              >
+                YES
+              </Text>
+            </TouchableOpacity>
 
-<View style={styles.container}>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('Home')}
+              style={{
+                marginHorizontal: 20,
+                backgroundColor: '#E8E8E8',
+                marginBottom: 20,
+                height: 50,
+                width: 100,
+                borderRadius: 10,
+                justifyContent: 'center',
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 24,
+                  alignSelf: 'center',
+                  color: 'black',
+                  fontFamily: theme.fonts.secondary,
+                }}
+              >
+                NO
+              </Text>
+            </TouchableOpacity>
+          </View>
 
-<ScrollView contentContainerStyle={styles.contentContainer}>
-<View style={styles.initialText}>
-  <Text style={styles.titleText}>logout</Text>
-  <Text style={styles.subText}> Are you sure you want to logout? </Text>
-</View>
-
-        {/* <Button title='Yes' onPress={this.logout}></Button> */}
-
-        <View style={{flexDirection: "row", flex: 1, alignContent: "center", justifyContent: 'center', marginVertical: 20}}>
-        <TouchableOpacity
-        onPress={this.logout} style={{marginHorizontal: 20, backgroundColor: "#E8E8E8", marginBottom: 20, height: 50, width: 100, borderRadius: 10, justifyContent: 'center'}}>
-        <Text style={{fontSize: 24,
-            alignSelf: 'center', 
-            color: 'black',
-          fontFamily: theme.fonts.secondary}}>YES</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-        onPress={() => this.props.navigation.navigate('Home')} style={{marginHorizontal: 20,backgroundColor: "#E8E8E8", marginBottom: 20, height: 50, width: 100, borderRadius: 10, justifyContent: 'center'}}>
-        <Text style={{fontSize: 24,
-            alignSelf: 'center', 
-            color: 'black',
-          fontFamily: theme.fonts.secondary}}>NO</Text>
-        </TouchableOpacity>
-          
-        </View>
-
-
-
-        {/* <Button title='No' onPress={this.props.navigation.navigate('Root')}></Button> */}
-
-</ScrollView>
-
-
-</View>
+          {/* <Button title='No' onPress={this.props.navigation.navigate('Root')}></Button> */}
+        </ScrollView>
+      </View>
     );
   }
 }
@@ -71,7 +117,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.primary.background,
-    alignItems: 'center'
+    alignItems: 'center',
   },
   contentContainer: {
     paddingTop: 30,
@@ -83,8 +129,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 100,
     marginBottom: 20,
-    justifyContent: 'center'
-
+    justifyContent: 'center',
   },
 
   titleText: {
@@ -101,7 +146,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
-    alignSelf: "center",
+    alignSelf: 'center',
     textAlign: 'center',
   },
   imageContainer: {
