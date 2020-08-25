@@ -22,7 +22,7 @@ function StatsBarChart({ actBarData, recBarData }) {
           { name: 'Recommended', symbol: { fill: '#A784E2' } },
         ]}
       />
-      <VictoryStack colorScale={['#A4D38D', 'A784E2']}>
+      <VictoryStack colorScale={['#A4D38D', '#A784E2']}>
         <VictoryBar data={actBarData} />
         <VictoryBar data={recBarData} />
       </VictoryStack>

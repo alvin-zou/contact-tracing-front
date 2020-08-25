@@ -8,8 +8,9 @@ import {
   View,
   Alert,
   Dimensions,
+  Switch,
 } from 'react-native';
-import { Toggle, Layout } from '@ui-kitten/components';
+import { Layout } from '@ui-kitten/components';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import StatsDonutChart from '../components/StatsDonutChart';
@@ -139,11 +140,9 @@ const infoAlert = () => {
 const StatsScreen = () => {
   const [showDonut, setShowDonut] = React.useState(false);
 
-  const onActiveCheckedChange = isChecked => {
-    setShowDonut(isChecked);
-  };
+  const onActiveCheckedChange = () =>
+    setShowDonut(previousState => !previousState);
 
-  console.log('showDonut', showDonut);
   return (
     <View style={styles.container}>
       <ScrollView
@@ -159,10 +158,12 @@ const StatsScreen = () => {
               <Text>Bar</Text>
             </Layout>
             <Layout style={styles.layoutSwitch} level="2">
-              <Toggle
-                style={styles.toggle}
-                checked={showDonut}
-                onChange={onActiveCheckedChange}
+              <Switch
+                trackColor={{ false: '#767577', true: '#81b0ff' }}
+                thumbColor={showDonut ? '#f5dd4b' : '#f4f3f4'}
+                ios_backgroundColor="#3e3e3e"
+                onValueChange={onActiveCheckedChange}
+                value={showDonut}
               />
             </Layout>
             <Layout style={styles.layoutLabel} level="3">
@@ -182,16 +183,19 @@ const StatsScreen = () => {
                   fill: theme.colors.primary.oldSafe,
                   letterSpacing: 10,
                   fontWeight: 'bold',
+                  fontFamily: theme.fonts.titles,
                 },
                 {
                   fontWeight: '600',
                   fontSize: 23,
                   fill: theme.colors.fonts.dark,
+                  fontFamily: theme.fonts.secondary,
                 },
                 {
                   fontWeight: '600',
                   fontSize: 23,
                   fill: theme.colors.fonts.dark,
+                  fontFamily: theme.fonts.secondary,
                 },
               ]}
               data={pieChartData}
@@ -228,6 +232,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   layoutContainer: {
+    paddingTop: '5%',
     flex: 1,
     flexDirection: 'row',
   },

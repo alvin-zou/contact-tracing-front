@@ -5,16 +5,12 @@ import Svg from 'react-native-svg';
 function StatsDonutChart({
   width,
   height,
-  innerRadius,
   labelStyle,
   padAngle,
   data,
   colorScale,
   centerLabelText,
 }) {
-  console.log('labelStyle', labelStyle);
-  console.log('height', height);
-  console.log('width', width);
   return (
     <Svg height={height} width={width}>
       <VictoryPie
@@ -33,7 +29,7 @@ function StatsDonutChart({
         verticalAnchor="middle"
         style={labelStyle}
         x={width * 0.5}
-        y={height * 0.55}
+        y={height * 0.58}
         text={centerLabelText}
       />
     </Svg>
