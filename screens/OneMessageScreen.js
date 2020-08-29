@@ -18,7 +18,7 @@ import theme from '../theme';
 export default function OneMessageScreen({ route, navigation }) {
   const { message, title } = route.params;
 
-  const dotStyle = read => {
+  const dotStyle = (read) => {
     if (!read) {
       return {
         height: 17,
@@ -127,10 +127,10 @@ const styles = StyleSheet.create({
   initialText: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 50,
   },
 
   titleText: {
+    marginTop: 50,
     fontSize: 60,
     fontWeight: 'bold',
     // paddingTop: '55%',

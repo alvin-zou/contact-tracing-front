@@ -161,7 +161,6 @@ export default function CampusScreen() {
           alignItems: 'center',
           height: 100,
           width: 100,
-          right: 0,
         }}
       >
         <View
@@ -277,7 +276,6 @@ const styles = StyleSheet.create({
   image: {
     width: 75,
     height: 75,
-    width: 75,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',

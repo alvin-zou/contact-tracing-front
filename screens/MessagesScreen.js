@@ -37,7 +37,7 @@ export default function MessagesScreen({ route, navigation }) {
     },
   ]);
 
-  const dotStyle = read => {
+  const dotStyle = (read) => {
     if (!read) {
       return {
         height: 17,
@@ -56,7 +56,7 @@ export default function MessagesScreen({ route, navigation }) {
     };
   };
 
-  const openMessage = ind => {
+  const openMessage = (ind) => {
     const newMessages = messages.slice();
     newMessages[ind].read = true;
     setMessages(newMessages);
@@ -154,15 +154,13 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     justifyContent: 'flex-start',
   },
-
   initialText: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 20,
   },
-
   titleText: {
     fontSize: 60,
+    marginTop: 30,
     fontWeight: 'bold',
     // paddingTop: '55%',
     color: theme.colors.primary.oldSafe,

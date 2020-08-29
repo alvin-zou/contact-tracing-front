@@ -1,197 +1,115 @@
 import * as React from 'react';
-import {
-  Text,
-  TextInput,
-  View,
-  Button,
-  Platform,
-  StyleSheet,
-  Alert,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, TextInput, View, Button, Platform, StyleSheet, Alert, TouchableOpacity } from 'react-native';
+import theme from '../theme.js';
 import firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
-import theme from '../theme.js';
 
 export default class SignOnScreen extends React.Component {
   state = {
-    email: '',
-    password: '',
-  };
-
+    email: '', password: ''
+  }
   signUp = async () => {
     const email = String(this.state.email).trim();
     const password = String(this.state.password).trim();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-        this.props.navigation.navigate('Survey');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+                   .then(() => {
+                      console.log('User account created & signed in!');
+                      this.props.navigation.navigate('Survey');
+                    })
+                    .catch(error => {
+                      if (error.code === 'auth/email-already-in-use') {
+                        console.log('That email address is already in use!');
+                      }
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
+                      if (error.code === 'auth/invalid-email') {
+                        console.log('That email address is invalid!');
+                      }
 
-        console.error(error);
-      });
-  };
-
+                      console.error(error);
+                    });
+  }
   login = async () => {
     const email = String(this.state.email).trim();
     const password = String(this.state.password).trim();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log("You've been signed in!");
-        this.props.navigation.navigate('Root');
-      })
-      .catch(error => {
-        if (error.code === 'auth/invalid-password') {
-          console.log('This password is invalid!');
-        }
+    firebase.auth().signInWithEmailAndPassword(email, password)
+                 .then(() => {
+                   console.log('You\'ve been signed in!');
+                   this.props.navigation.navigate('Root');
+                 })
+                 .catch(error => {
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
+                   if (error.code === 'auth/invalid-password') {
+                     console.log('This password is invalid!');
+                   }
 
-        console.error(error);
-      });
-  };
+                   if (error.code === 'auth/invalid-email') {
+                     console.log('That email address is invalid!');
+                   }
+
+                   console.error(error);
+                 });
+  }
 
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <View style={styles.initialText}>
-            <Text style={styles.titleText}>login</Text>
-          </View>
 
-          <View style={{ alignItems: 'center' }}>
-            <Text style={styles.subText}>EMAIL</Text>
-            <View
-              style={{
-                backgroundColor: '#E8E8E8',
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                marginBottom: 20,
-              }}
-            >
-              <TextInput
-                onChangeText={text => this.setState({ email: text })}
-                style={{
-                  fontFamily: theme.fonts.secondary,
-                  fontSize: 26,
-                  height: 50,
-                  width: 250,
-                  alignSelf: 'center',
-                }}
-              />
-            </View>
-
-            <Text style={styles.subText}>PASSWORD</Text>
-            <View
-              style={{
-                backgroundColor: '#E8E8E8',
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                marginBottom: 20,
-              }}
-            >
-              <TextInput
-                onChangeText={text => this.setState({ password: text })}
-                secureTextEntry
-                style={{
-                  fontFamily: theme.fonts.secondary,
-                  fontSize: 26,
-                  height: 50,
-                  width: 250,
-                  alignSelf: 'center',
-                }}
-              />
-            </View>
-
-            <TouchableOpacity
-              onPress={this.login}
-              style={{
-                backgroundColor: '#E8E8E8',
-                marginBottom: 20,
-                height: 50,
-                width: 100,
-                borderRadius: 10,
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 24,
-                  alignSelf: 'center',
-                  color: 'black',
-                  fontFamily: theme.fonts.secondary,
-                }}
-              >
-                LOG IN
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={this.signUp}
-              style={{
-                backgroundColor: '#E8E8E8',
-                marginBottom: 20,
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 24,
-                  alignSelf: 'center',
-                  color: 'black',
-                  fontFamily: theme.fonts.secondary,
-                }}
-              >
-                CREATE NEW ACCOUNT
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate('Root');
-              }}
-              style={{
-                backgroundColor: '#A5D38D',
-                marginBottom: 20,
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 24,
-                  alignSelf: 'center',
-                  color: 'black',
-                  fontFamily: theme.fonts.secondary,
-                }}
-              >
-                Test mode (skip login)
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+      <View style={styles.initialText}>
+        <Text style={styles.titleText}>login</Text>
       </View>
+
+        <View style={{alignItems: "center"}}>
+
+        <Text style={styles.subText}>EMAIL</Text>
+        <View style={{backgroundColor: "#E8E8E8", height: 50, width: 300, borderRadius: 10, marginBottom: 20, }}>
+        <TextInput
+        onChangeText={(text) => this.setState({email: text})} style={{    fontFamily: theme.fonts.secondary,
+          fontSize: 26, height: 50, width: 250, alignSelf: 'center'}}>
+        </TextInput>
+        </View>
+        
+
+        <Text style={styles.subText}>PASSWORD</Text>
+        <View style={{backgroundColor: "#E8E8E8", height: 50, width: 300, borderRadius: 10, marginBottom: 20, }}>
+        <TextInput
+        onChangeText={(text) => this.setState({password: text})} secureTextEntry={true} style={{    fontFamily: theme.fonts.secondary,          fontSize: 26, height: 50, width: 250, alignSelf: 'center'}}>
+        </TextInput>
+        </View>
+
+        <TouchableOpacity
+        onPress={this.login} style={{backgroundColor: "#E8E8E8", marginBottom: 20, height: 50, width: 100, borderRadius: 10, justifyContent: 'center'}}>
+        <Text style={{fontSize: 24,
+            alignSelf: 'center', 
+            color: 'black',
+          fontFamily: theme.fonts.secondary}}>LOG IN</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+        onPress={this.signUp} style={{backgroundColor: "#E8E8E8", marginBottom: 20, height: 50, width: 300, borderRadius: 10, justifyContent: 'center'}}>
+        <Text style={{fontSize: 24,
+            alignSelf: 'center', 
+            color: 'black',
+          fontFamily: theme.fonts.secondary}}>CREATE NEW ACCOUNT</Text>
+        </TouchableOpacity>
+
+
+        <TouchableOpacity
+        onPress={() => {this.props.navigation.navigate('Root');}} style={{backgroundColor: "#A5D38D", marginBottom: 20, height: 50, width: 300, borderRadius: 10, justifyContent: 'center'}}>
+        <Text style={{fontSize: 24,
+            alignSelf: 'center', 
+            color: 'black',
+          fontFamily: theme.fonts.secondary}}>Test mode (skip login)</Text>
+        </TouchableOpacity>
+
+        </View>
+
+    </ScrollView>
+
+
+    </View>
+
+
     );
   }
 }
@@ -204,7 +122,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.colors.primary.background,
-    alignItems: 'center',
+    alignItems: 'center'
   },
   contentContainer: {
     paddingTop: 30,
@@ -214,12 +132,12 @@ const styles = StyleSheet.create({
   initialText: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 100,
     marginBottom: 20,
   },
 
   titleText: {
     fontSize: 60,
+    marginTop: 100,
     fontWeight: 'bold',
     // paddingTop: '55%',
     color: theme.colors.primary.oldSafe,
@@ -232,7 +150,7 @@ const styles = StyleSheet.create({
     color: 'black',
     fontFamily: theme.fonts.secondary,
     letterSpacing: 3,
-    alignSelf: 'center',
+    alignSelf: "center",
   },
   imageContainer: {
     paddingTop: '10%',

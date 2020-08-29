@@ -194,6 +194,7 @@ const styles = StyleSheet.create({
   },
   image: {},
   titleText: {
+    marginTop: 20,
     fontSize: 60,
     fontWeight: 'bold',
     // paddingTop: status==="quarantined" ? '58%' : '55%',

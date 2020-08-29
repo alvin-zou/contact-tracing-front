@@ -1,6 +1,8 @@
 // import * as WebBrowser from 'expo-web-browser';
 // import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
+import firebase from 'firebase';
+
 import {
   Image,
   Platform,
@@ -15,17 +17,52 @@ import theme from '../theme';
 // import { MonoText } from '../components/StyledText';
 
 export default function MenuScreen({ navigation }) {
-  const house = {
-    name: 'CURRIER HOUSE',
-    file: require('../assets/images/Currier.png'),
+
+  const house = 'CURRIER';
+  const status = 'safe'; // safe, limited, restricted, quarantined
+  const student = { firstName: 'DEMO', lastName: 'STUDENT' };
+  const name = student.firstName + '\n' + student.lastName;
+  const initials = student.firstName.charAt(0) + student.lastName.charAt(0);
+
+
+  const houseName = house.concat('\n' + 'HOUSE');
+
+  const logout = async () => {
+    firebase.auth().signOut().then(function() {
+        console.log('You\'ve been signed out!');
+        navigation.navigate('Sign On');
+      }).catch(function(error) {
+        console.error(error);
+      });
+  }
+
+  const houseDict = {
+   'CURRIER': require('../assets/images/Currier.png'),
+   'QUINCY': require('../assets/images/Quincy.png'),
+   'WINTHROP': require('../assets/images/Winthrop.png'),
+   'LOWELL': require('../assets/images/Lowell.png'),
+   'ELIOT': require('../assets/images/Eliot.png'),
+   'MATHER': require('../assets/images/Mather.png'),
+   'KIRKLAND': require('../assets/images/Kirkland.png'),
+   'DUNSTER': require('../assets/images/Dunster.png'),
+   'LEVERETT': require('../assets/images/Leverett.png'),
+   'ADAMS': require('../assets/images/Adams.png'),
+   'PFOHO': require('../assets/images/Pfoho.png'),
+   'CABOT': require('../assets/images/Cabot.png'),
+   'DUDLEY': require('../assets/images/Dudley.png'),
+   'CRIMSON': require('../assets/images/Crimson.png'),
+   'ELM': require('../assets/images/Elm.png'),
+   'IVY': require('../assets/images/Ivy.png'),
+   'OAK': require('../assets/images/Oak.png'),
   };
+
   const aboutImageFirstRow = [
     { name: 'METHODOLOGY', file: require('../assets/images/Methodology.png') },
     { name: 'PRIVACY', file: require('../assets/images/Privacy.png') },
     { name: 'SURVEY', file: require('../assets/images/Survey.png') },
   ];
-  const student = { acronym: 'DS', name: 'DEMO STUDENT' };
-  const negative = true;
+
+
   const aboutImageSecondRow = [
     { name: 'SETTINGS', file: require('../assets/images/Settings.png') },
     { name: 'COVID-19 INFO', file: require('../assets/images/covid_info.png') },
@@ -59,92 +96,90 @@ export default function MenuScreen({ navigation }) {
       style={{
         alignContent: 'center',
         flexDirection: 'row',
-        paddingTop: '10%',
         flex: 1,
-        bottom: 25,
-        justifyContent: 'center',
+        justifyContent: 'space-around',
       }}
     >
       <View style={styles.imageContainer}>
         <View
           style={{
-            height: 75,
-            width: 75,
+            height: 65,
+            width: 65,
             backgroundColor: theme.colors.primary.oldSafe,
-            borderRadius: 75 / 2,
+            borderRadius: 65 / 2,
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
         >
           <Text
             style={{
-              fontSize: 37,
-              top: 10,
+              fontSize: 30,
               textAlign: 'center',
               color: 'white',
               fontFamily: theme.fonts.secondary,
               letterSpacing: 1,
             }}
           >
-            {student.acronym}
+            {initials}
           </Text>
         </View>
-        <Text style={styles.houseText}>{student.name}</Text>
+        <Text style={styles.houseText}>{name}</Text>
       </View>
-      <View style={styles.imageContainer2}>
-        <Image style={styles.image2} source={house.file} />
-        <Text style={styles.houseText2}>{house.name}</Text>
+      <View
+        style={{
+          alignItems: 'center',
+          height: 100,
+          width: 100,
+        }}>
+        <View style={styles.imageContainer2}>
+          <Image style={styles.image2} source={houseDict[house]} />
+        </View>
+        <Text style={styles.houseText2}>{houseName}</Text>
       </View>
       <View style={styles.imageContainer}>
-        {negative ? (
-          <View
-            style={{
-              height: 75,
-              width: 75,
-              backgroundColor: theme.colors.primary.oldSafe,
-              borderRadius: 75 / 2,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 70,
-                textAlign: 'center',
-                color: 'white',
-                fontFamily: theme.fonts.secondary,
-                letterSpacing: 1,
-                bottom: 15,
-              }}
-            >
-              -
-            </Text>
-          </View>
-        ) : (
-          <View
-            style={{
-              height: 75,
-              width: 75,
-              backgroundColor: theme.colors.primary.restricted,
-              borderRadius: 75 / 2,
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 50,
-                top: 2,
-                textAlign: 'center',
-                color: 'white',
-                fontFamily: theme.fonts.secondary,
-                letterSpacing: 1,
-                bottom: 15,
-              }}
-            >
-              !
-            </Text>
-          </View>
-        )}
-        {negative ? (
-          <Text style={styles.houseText}>NO SIGNS OF COVID-19</Text>
-        ) : (
-          <Text style={styles.houseText}>SELF ISOLATE</Text>
-        )}
+        <View
+          style={{
+            height: 65,
+            width: 65,
+            borderWidth: 5,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderColor:
+             status === 'safe'
+                ? theme.colors.primary.safe
+                : status === 'limited'
+                ? theme.colors.primary.limited
+                : status === 'restricted'
+                ? theme.colors.primary.restricted
+                : status === 'quarantined'
+                ? theme.colors.primary.quarantined
+                : 'black',
+            borderRadius: 65 / 2,
+          }}
+        >
+          <Image style={styles.image3} source={require(
+            status === 'safe'
+                ? '../assets/images/Safe.png'
+                : status === 'limited'
+                ? '../assets/images/LimitContact.png'
+                : status === 'restricted'
+                ? '../assets/images/StayHome.png'
+                : status === 'quarantined'
+                ? '../assets/images/Quarantine.png'
+                : '../assets/images/icon.png')} />
+        </View>
+        <Text style={styles.houseText}>
+          {status === 'safe'
+              ? `SAFE` + '\n'
+              : status === 'limited'
+              ? `CAUTION` + '\n'
+              : status === 'restricted'
+              ? `EXPOSED` + '\n'
+              : status === 'quarantined'
+              ? `INFECTED` + '\n'
+              : 'black' + '\n'
+          }
+        </Text>
       </View>
     </View>
   );
@@ -154,23 +189,23 @@ export default function MenuScreen({ navigation }) {
       <ScrollView contentContainerStyle={styles.contentContainer}>
         <View style={styles.initialText}>
           <Text style={styles.titleText}>menu</Text>
-          <View style={{ height: 10, flex: 1 }} />
-          <Text style={styles.subText}>PROFILE</Text>
         </View>
 
-        <View>
+        <View style={{ backgroundColor: 'black', height: 1, width: "90%", alignSelf: 'center', marginBottom: 20, marginTop: 15 }}></View>
+
           {showFirstRow}
-          {/* <Text
-            style={styles.infoText}
-            onPress={() => Alert.alert('Not available yet.')}
+          <TouchableOpacity
+            onPress={logout}
           >
-            EDIT PROFILE
-          </Text> */}
-        </View>
+            <Text
+              style={styles.infoText}
+            >
+              LOGOUT
+            </Text> 
+          </TouchableOpacity>
+          
 
-        <View style={{ height: 10, flex: 1 }} />
-        <Text style={styles.subText}>ABOUT</Text>
-        <View style={{ height: 10, flex: 1 }} />
+        <View style={{ backgroundColor: 'black', height: 1, width: "90%", alignSelf: 'center', marginVertical: 20 }}></View>
 
         <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
           {displayFirstRow}
@@ -216,16 +251,12 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     justifyContent: 'flex-start',
   },
-
   initialText: {
     flex: 1,
     fontWeight: 'bold',
     // paddingTop: '55%',
     color: theme.colors.primary.oldSafe,
     letterSpacing: 3,
-  },
-  initialText: {
-    flex: 1,
     alignItems: 'center',
   },
   subText: {
@@ -240,6 +271,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     color: theme.colors.primary.background,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   titleText: {
     fontSize: 60,
@@ -256,24 +288,33 @@ const styles = StyleSheet.create({
     height: 75,
     borderWidth: 5,
     borderRadius: 75 / 2,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   imageContainer2: {
-    marginHorizontal: 30,
-    height: 75,
-    width: 75,
+    height: 65,
+    width: 65,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
     borderColor: 'orange',
     borderWidth: 5,
-    borderRadius: 75 / 2,
+    borderRadius: 65 / 2,
   },
   image2: {
     resizeMode: 'contain',
     height: 40,
     width: 40,
+    alignSelf: 'center',
     left: 1,
-    top: 22,
+    top: 2,
+  },
+  image3: {
+    resizeMode: 'contain',
+    height: 40,
+    width: 40,
+    alignSelf: 'center',
+    bottom: 1,
   },
   houseText: {
     fontSize: 15,
@@ -287,16 +328,13 @@ const styles = StyleSheet.create({
   houseText2: {
     fontSize: 15,
     textAlign: 'center',
-    width: 125,
     color: 'black',
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
-    top: 37,
   },
   logoText: {
     fontSize: 15,
     textAlign: 'center',
-    width: 125,
     color: 'gray',
     fontFamily: theme.fonts.secondary,
     letterSpacing: 1,
@@ -307,8 +345,8 @@ const styles = StyleSheet.create({
     marginTop: 30,
   },
   logoImage: {
-    width: 100,
-    height: 100,
+    width: 80,
+    height: 80,
   },
   aboutImage: {
     width: 100,
@@ -322,7 +360,6 @@ const styles = StyleSheet.create({
     letterSpacing: 1,
     textDecorationLine: 'underline',
     marginTop: 10,
-    marginBottom: 30,
     alignSelf: 'center',
   },
   info: {
