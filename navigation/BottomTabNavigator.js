@@ -9,12 +9,12 @@ import MessagesScreen from '../screens/MessagesScreen';
 import MenuScreen from '../screens/MenuScreen';
 import CampusScreen from '../screens/CampusScreen';
 import WelcomeScreen from '../screens/WelcomeScreen';
-import LogoutScreen from '../screens/LogoutScreen';
+// import LogoutScreen from '../screens/LogoutScreen';
 
 const BottomTab = createBottomTabNavigator();
 
 // change what is displayed
-const INITIAL_ROUTE_NAME = 'Messages'; // home, stats, health, messages, menu
+const INITIAL_ROUTE_NAME = 'Home'; // home, stats, health, messages, menu
 
 export default function BottomTabNavigator({ navigation, route }) {
   // Set the header title on the parent stack navigator depending on the
@@ -83,17 +83,7 @@ export default function BottomTabNavigator({ navigation, route }) {
           ),
         }}
       />
-      <BottomTab.Screen
-        name="Logout"
-        component={LogoutScreen}
-        options={{
-          title: 'Logout',
-          tabBarIcon: ({ focused }) => (
-            <TabBarIcon focused={focused} name="md-person" />
-          ),
-        }}
-      />
-    </BottomTab.Navigator>
+      </BottomTab.Navigator>
   );
 }
 
