@@ -2,11 +2,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
-import * as fire from './Fire.js';
 import * as eva from '@eva-design/eva';
 import { ApplicationProvider } from '@ui-kitten/components';
 import firebase from 'firebase';
-export { uid };
+import Amplify from 'aws-amplify';
+import * as fire from './Fire';
+import { awsAmplifyConfig } from './awsAmplifyConfig';
 
 import useCachedResources from './hooks/useCachedResources';
 import BottomTabNavigator from './navigation/BottomTabNavigator';
@@ -17,7 +18,7 @@ import OneMessageScreen from './screens/OneMessageScreen';
 import SignOnScreen from './screens/SignOnScreen';
 
 const Stack = createStackNavigator();
-var uid;
+let uid;
 
 const styles = StyleSheet.create({
   container: {
@@ -25,6 +26,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
 });
+
+Amplify.configure(awsAmplifyConfig);
 
 // eslint-disable-next-line no-unused-vars
 export default function App(props) {
@@ -45,7 +48,7 @@ export default function App(props) {
   return (
     <ApplicationProvider {...eva} theme={eva.light}>
       <View style={styles.container}>
-        {/* {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />}*/}
+        {/* {Platform.OS === 'ios' && <StatusBar barStyle="dark-content" />} */}
         <NavigationContainer linking={LinkingConfiguration}>
           <Stack.Navigator
             initialRouteName="Welcome"
@@ -61,3 +64,5 @@ export default function App(props) {
     </ApplicationProvider>
   );
 }
+
+export { uid };

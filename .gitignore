@@ -4,6 +4,7 @@
 
 # Expo files
 .expo/
+environment.js
 
 # Xcode
 #

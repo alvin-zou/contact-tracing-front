@@ -1,8 +1,11 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Auth, Hub } from 'aws-amplify';
+
 import {
   Text,
   TextInput,
   View,
+  Linking,
   Button,
   Platform,
   StyleSheet,
@@ -11,125 +14,53 @@ import {
 } from 'react-native';
 import firebase from 'firebase';
 import { ScrollView } from 'react-native-gesture-handler';
-import theme from '../theme.js';
 
-export default class SignOnScreen extends React.Component {
-  state = {
-    email: '',
-    password: '',
-  };
+import theme from '../theme';
 
-  signUp = async () => {
-    const email = String(this.state.email).trim();
-    const password = String(this.state.password).trim();
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log('User account created & signed in!');
-        this.props.navigation.navigate('Survey');
-      })
-      .catch(error => {
-        if (error.code === 'auth/email-already-in-use') {
-          console.log('That email address is already in use!');
-        }
+export default function SignOnScreen() {
+  const [user, setUser] = useState(null);
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
+  useEffect(() => {
+    async function getUser() {
+      const userData = await Auth.currentAuthenticatedUser();
+      return userData;
+    }
 
-        console.error(error);
-      });
-  };
+    Hub.listen('auth', ({ payload: { event, data } }) => {
+      console.log('event', event);
+      switch (event) {
+        case 'signIn':
+        case 'cognitoHostedUI':
+          setUser(getUser());
+          break;
+        case 'signOut':
+          setUser(null);
+          break;
+        case 'signIn_failure':
+        case 'cognitoHostedUI_failure':
+          console.log('Sign in failure', data);
+          break;
+        // no default
+      }
+    });
 
-  login = async () => {
-    const email = String(this.state.email).trim();
-    const password = String(this.state.password).trim();
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        console.log("You've been signed in!");
-        this.props.navigation.navigate('Root');
-      })
-      .catch(error => {
-        if (error.code === 'auth/invalid-password') {
-          console.log('This password is invalid!');
-        }
+    // setUser(getUser());
+  }, []);
 
-        if (error.code === 'auth/invalid-email') {
-          console.log('That email address is invalid!');
-        }
+  return (
+    <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
+        <View style={styles.initialText}>
+          <Text style={styles.titleText}>login</Text>
+        </View>
 
-        console.error(error);
-      });
-  };
+        <View style={{ alignItems: 'center' }}>
+          <Text style={styles.titleText}>
+            User: {user ? JSON.stringify(user.username) : 'None'}
+          </Text>
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <ScrollView contentContainerStyle={styles.contentContainer}>
-          <View style={styles.initialText}>
-            <Text style={styles.titleText}>login</Text>
-          </View>
-
-          <View style={{ alignItems: 'center' }}>
-            <Text style={styles.subText}>EMAIL</Text>
-            <View
-              style={{
-                backgroundColor: '#E8E8E8',
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                marginBottom: 20,
-              }}
-            >
-              <TextInput
-                onChangeText={text => this.setState({ email: text })}
-                style={{
-                  fontFamily: theme.fonts.secondary,
-                  fontSize: 26,
-                  height: 50,
-                  width: 250,
-                  alignSelf: 'center',
-                }}
-              />
-            </View>
-
-            <Text style={styles.subText}>PASSWORD</Text>
-            <View
-              style={{
-                backgroundColor: '#E8E8E8',
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                marginBottom: 20,
-              }}
-            >
-              <TextInput
-                onChangeText={text => this.setState({ password: text })}
-                secureTextEntry
-                style={{
-                  fontFamily: theme.fonts.secondary,
-                  fontSize: 26,
-                  height: 50,
-                  width: 250,
-                  alignSelf: 'center',
-                }}
-              />
-            </View>
-
-            <TouchableOpacity
-              onPress={this.login}
-              style={{
-                backgroundColor: '#E8E8E8',
-                marginBottom: 20,
-                height: 50,
-                width: 100,
-                borderRadius: 10,
-                justifyContent: 'center',
-              }}
-            >
+          {user ? (
+            <TouchableOpacity onPress={() => Auth.signOut()}>
               <Text
                 style={{
                   fontSize: 24,
@@ -138,21 +69,11 @@ export default class SignOnScreen extends React.Component {
                   fontFamily: theme.fonts.secondary,
                 }}
               >
-                LOG IN
+                Sign Out
               </Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={this.signUp}
-              style={{
-                backgroundColor: '#E8E8E8',
-                marginBottom: 20,
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                justifyContent: 'center',
-              }}
-            >
+          ) : (
+            <TouchableOpacity onPress={() => Auth.federatedSignIn()}>
               <Text
                 style={{
                   fontSize: 24,
@@ -161,40 +82,198 @@ export default class SignOnScreen extends React.Component {
                   fontFamily: theme.fonts.secondary,
                 }}
               >
-                CREATE NEW ACCOUNT
+                Federated Sign In
               </Text>
             </TouchableOpacity>
-
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate('Root');
-              }}
-              style={{
-                backgroundColor: '#A5D38D',
-                marginBottom: 20,
-                height: 50,
-                width: 300,
-                borderRadius: 10,
-                justifyContent: 'center',
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 24,
-                  alignSelf: 'center',
-                  color: 'black',
-                  fontFamily: theme.fonts.secondary,
-                }}
-              >
-                Test mode (skip login)
-              </Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-    );
-  }
+          )}
+        </View>
+      </ScrollView>
+    </View>
+  );
 }
+
+// export default class SignOnScreen extends React.Component {
+//   state = {
+//     email: '',
+//     password: '',
+//   };
+
+//   signUp = async () => {
+//     const email = String(this.state.email).trim();
+//     const password = String(this.state.password).trim();
+//     firebase
+//       .auth()
+//       .createUserWithEmailAndPassword(email, password)
+//       .then(() => {
+//         console.log('User account created & signed in!');
+//         this.props.navigation.navigate('Survey');
+//       })
+//       .catch(error => {
+//         if (error.code === 'auth/email-already-in-use') {
+//           console.log('That email address is already in use!');
+//         }
+
+//         if (error.code === 'auth/invalid-email') {
+//           console.log('That email address is invalid!');
+//         }
+
+//         console.error(error);
+//       });
+//   };
+
+//   login = async () => {
+//     const email = String(this.state.email).trim();
+//     const password = String(this.state.password).trim();
+//     firebase
+//       .auth()
+//       .signInWithEmailAndPassword(email, password)
+//       .then(() => {
+//         console.log("You've been signed in!");
+//         this.props.navigation.navigate('Root');
+//       })
+//       .catch(error => {
+//         if (error.code === 'auth/invalid-password') {
+//           console.log('This password is invalid!');
+//         }
+
+//         if (error.code === 'auth/invalid-email') {
+//           console.log('That email address is invalid!');
+//         }
+
+//         console.error(error);
+//       });
+//   };
+
+//   render() {
+//     return (
+// <View style={styles.container}>
+//   <ScrollView contentContainerStyle={styles.contentContainer}>
+//     <View style={styles.initialText}>
+//       <Text style={styles.titleText}>login</Text>
+//     </View>
+
+//     <View style={{ alignItems: 'center' }}>
+//       <Text style={styles.subText}>EMAIL</Text>
+//       <View
+//         style={{
+//           backgroundColor: '#E8E8E8',
+//           height: 50,
+//           width: 300,
+//           borderRadius: 10,
+//           marginBottom: 20,
+//         }}
+//       >
+//         <TextInput
+//           onChangeText={text => this.setState({ email: text })}
+//           style={{
+//             fontFamily: theme.fonts.secondary,
+//             fontSize: 26,
+//             height: 50,
+//             width: 250,
+//             alignSelf: 'center',
+//           }}
+//         />
+//       </View>
+
+//       <Text style={styles.subText}>PASSWORD</Text>
+//       <View
+//         style={{
+//           backgroundColor: '#E8E8E8',
+//           height: 50,
+//           width: 300,
+//           borderRadius: 10,
+//           marginBottom: 20,
+//         }}
+//       >
+//         <TextInput
+//           onChangeText={text => this.setState({ password: text })}
+//           secureTextEntry
+//           style={{
+//             fontFamily: theme.fonts.secondary,
+//             fontSize: 26,
+//             height: 50,
+//             width: 250,
+//             alignSelf: 'center',
+//           }}
+//         />
+//       </View>
+
+//       <TouchableOpacity
+//         onPress={this.login}
+//         style={{
+//           backgroundColor: '#E8E8E8',
+//           marginBottom: 20,
+//           height: 50,
+//           width: 100,
+//           borderRadius: 10,
+//           justifyContent: 'center',
+//         }}
+//       >
+//         <Text
+//           style={{
+//             fontSize: 24,
+//             alignSelf: 'center',
+//             color: 'black',
+//             fontFamily: theme.fonts.secondary,
+//           }}
+//         >
+//           LOG IN
+//         </Text>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity
+//         onPress={this.signUp}
+//         style={{
+//           backgroundColor: '#E8E8E8',
+//           marginBottom: 20,
+//           height: 50,
+//           width: 300,
+//           borderRadius: 10,
+//           justifyContent: 'center',
+//         }}
+//       >
+//         <Text
+//           style={{
+//             fontSize: 24,
+//             alignSelf: 'center',
+//             color: 'black',
+//             fontFamily: theme.fonts.secondary,
+//           }}
+//         >
+//           CREATE NEW ACCOUNT
+//         </Text>
+//       </TouchableOpacity>
+
+//       <TouchableOpacity
+//         onPress={() => {
+//           this.props.navigation.navigate('Root');
+//         }}
+//         style={{
+//           backgroundColor: '#A5D38D',
+//           marginBottom: 20,
+//           height: 50,
+//           width: 300,
+//           borderRadius: 10,
+//           justifyContent: 'center',
+//         }}
+//       >
+//         <Text
+//           style={{
+//             fontSize: 24,
+//             alignSelf: 'center',
+//             color: 'black',
+//             fontFamily: theme.fonts.secondary,
+//           }}
+//         >
+//           Test mode (skip login)
+//         </Text>
+//       </TouchableOpacity>
+//     </View>
+//   </ScrollView>
+// </View>
+//     );
+//   }
+// }
 
 SignOnScreen.navigationOptions = {
   header: null,
@@ -210,7 +289,9 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     justifyContent: 'flex-start',
   },
-
+  authContainer: {
+    marginTop: 100,
+  },
   initialText: {
     flex: 1,
     alignItems: 'center',
