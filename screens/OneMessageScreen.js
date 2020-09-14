@@ -127,11 +127,10 @@ const styles = StyleSheet.create({
   initialText: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 50,
-
   },
 
   titleText: {
+    marginTop: 50,
     fontSize: 60,
     fontWeight: 'bold',
     // paddingTop: '55%',

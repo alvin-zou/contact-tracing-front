@@ -24,7 +24,6 @@ export default class WelcomeScreen extends React.Component {
     };
   }
 
-
   fadeIn = (anim, fn) =>
     Animated.timing(anim, {
       toValue: 1,
@@ -56,7 +55,7 @@ export default class WelcomeScreen extends React.Component {
             duration: 3000,
             useNativeDriver: false,
           }).start(({ finished }) => {
-            this.props.navigation.navigate('Sign On')
+            this.props.navigation.navigate('Sign On');
           });
         });
       });
@@ -66,21 +65,23 @@ export default class WelcomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-       
         <ScrollView
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
         >
           <View style={styles.getStartedContainer}>
             <Text style={styles.welcomeText}>welcome</Text>
-            <View style={{alignItems: 'center', flex: 1}}>
+            <View style={{ alignItems: 'center', flex: 1 }}>
               <Animated.Text
-                style={[styles.subText, { opacity: this.state.fadeFirstText}]}
+                style={[styles.subText, { opacity: this.state.fadeFirstText }]}
               >
                 JUST A QUICK SURVEY TO GET STARTED
               </Animated.Text>
               <Animated.Text
-                style={[styles.subText, { opacity: this.state.fadeSecondText, position: 'absolute'}]}
+                style={[
+                  styles.subText,
+                  { opacity: this.state.fadeSecondText, position: 'absolute' },
+                ]}
               >
                 YOU CAN UPDATE YOUR RESPONSES AT ANY TIME
               </Animated.Text>

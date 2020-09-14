@@ -154,15 +154,13 @@ const styles = StyleSheet.create({
     paddingTop: 30,
     justifyContent: 'flex-start',
   },
-
   initialText: {
     flex: 1,
     alignItems: 'center',
-    marginTop: 20,
   },
-
   titleText: {
     fontSize: 60,
+    marginTop: 30,
     fontWeight: 'bold',
     // paddingTop: '55%',
     color: theme.colors.primary.oldSafe,

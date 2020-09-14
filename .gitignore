@@ -2,6 +2,9 @@
 #
 .DS_Store
 
+# Expo files
+.expo/
+
 # Xcode
 #
 build/
@@ -61,6 +64,3 @@ buck-out/
 # package-lock
 package-lock.json
 
-.expo/settings.json
-
-.expo/packager-info.json

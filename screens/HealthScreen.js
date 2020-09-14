@@ -6,10 +6,13 @@ import { RectButton, ScrollView } from 'react-native-gesture-handler';
 import theme from '../theme.js';
 
 class ToggleButton extends React.Component {
-
   render() {
     return (
-      <TouchableHighlight underlayColor='red' style={styles.container} onPress={this.props.onPress}>
+      <TouchableHighlight
+        underlayColor="red"
+        style={styles.container}
+        onPress={this.props.onPress}
+      >
         <View style={{ flexDirection: 'row' }}>
           <View style={styles.optionIconContainer}>
             <Ionicons size={22} color="rgba(0,0,0,0.35)" />
@@ -23,19 +26,17 @@ class ToggleButton extends React.Component {
   }
 }
 
-
 export default function SymptomScreen() {
   return (
-    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+    >
       <View style={styles.contentContainer}>
-        <Text style={styles.welcomeText}>
-          unwell?
-        </Text>
-        <Text style={styles.subText}>
-          LET US KNOW
-        </Text>
+        <Text style={styles.welcomeText}>unwell?</Text>
+        <Text style={styles.subText}>LET US KNOW</Text>
       </View>
-      <ToggleButton label='test' />
+      <ToggleButton label="test" />
 
       <OptionButton
         // icon="fever-chills"
@@ -47,7 +48,9 @@ export default function SymptomScreen() {
       <OptionButton
         // icon="cough"
         label="COUGH"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+        onPress={() =>
+          WebBrowser.openBrowserAsync('https://reactnavigation.org')
+        }
       />
 
       <OptionButton
@@ -60,26 +63,30 @@ export default function SymptomScreen() {
       <OptionButton
         // icon="fatigue"
         label="FATIGUE"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+        onPress={() =>
+          WebBrowser.openBrowserAsync('https://reactnavigation.org')
+        }
       />
 
       <OptionButton
         // icon="other"
         label="OTHER"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+        onPress={() =>
+          WebBrowser.openBrowserAsync('https://reactnavigation.org')
+        }
       />
 
       {/* needs padding */}
       <OptionButton
         // icon="report-symptoms"
         label="REPORT SYMPTOMS"
-        onPress={() => WebBrowser.openBrowserAsync('https://reactnavigation.org')}
+        onPress={() =>
+          WebBrowser.openBrowserAsync('https://reactnavigation.org')
+        }
       />
 
       <View style={styles.contentContainer}>
-        <Text style={styles.welcomeText}>
-          contacts
-        </Text>
+        <Text style={styles.welcomeText}>contacts</Text>
       </View>
     </ScrollView>
   );
@@ -87,7 +94,10 @@ export default function SymptomScreen() {
 
 function OptionButton({ icon, label, onPress, isLastOption }) {
   return (
-    <RectButton style={[styles.option, isLastOption && styles.lastOption]} onPress={onPress}>
+    <RectButton
+      style={[styles.option, isLastOption && styles.lastOption]}
+      onPress={onPress}
+    >
       <View style={{ flexDirection: 'row' }}>
         <View style={styles.optionIconContainer}>
           <Ionicons name={icon} size={22} color="rgba(0,0,0,0.35)" />
@@ -127,7 +137,7 @@ const styles = StyleSheet.create({
     fontFamily: theme.fonts.secondary,
     textAlign: 'center',
     letterSpacing: 3,
-    paddingBottom: 30
+    paddingBottom: 30,
   },
   optionIconContainer: {
     marginRight: 12,
@@ -147,6 +157,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     justifyContent: 'center',
     alignSelf: 'flex-start',
-    marginTop: 1
-  }
+    marginTop: 1,
+  },
 });

@@ -13,45 +13,98 @@ import {
   ScrollView,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import * as React from 'react';
 import theme from '../theme';
 // import { MonoText } from '../components/StyledText';
-import * as React from 'react';
-
 
 export default function CampusScreen() {
-
-
   const houses = [
-    {name: "CURRIER", imageFile: require('../assets/images/Currier.png'), score: 500},
-    {name: "QUINCY", imageFile: require('../assets/images/Quincy.png'), score: 450},
-    {name: "WINTHROP", imageFile: require('../assets/images/Winthrop.png'), score: 400},
-    {name: "LOWELL", imageFile: require('../assets/images/Lowell.png'), score: 350},
-    {name: "ELIOT", imageFile: require('../assets/images/Eliot.png'), score: 330},
-    {name: "MATHER", imageFile: require('../assets/images/Mather.png'), score: 300},
-    {name: "KIRKLAND", imageFile: require('../assets/images/Kirkland.png'), score: 250},
-    {name: "DUNSTER", imageFile: require('../assets/images/Dunster.png'), score: 230},
-    {name: "LEVERETT", imageFile: require('../assets/images/Leverett.png'), score: 200},
-    {name: "ADAMS", imageFile: require('../assets/images/Adams.png'), score: 150},
-    {name: "PFOHO", imageFile: require('../assets/images/Pfoho.png'), score: 100},
-    {name: "CABOT", imageFile: require('../assets/images/Cabot.png'), score: 50},
-    {name: "DUDLEY", imageFile: require('../assets/images/Dudley.png'), score: 30},
-    {name: "CRIMSON", imageFile: require('../assets/images/Crimson.png'), score: 20},
-    {name: "ELM", imageFile: require('../assets/images/Elm.png'), score: 10},
-    {name: "IVY", imageFile: require('../assets/images/Ivy.png'), score: 5},
-    {name: "OAK", imageFile: require('../assets/images/Oak.png'), score: 0}
+    {
+      name: 'CURRIER',
+      imageFile: require('../assets/images/Currier.png'),
+      score: 500,
+    },
+    {
+      name: 'QUINCY',
+      imageFile: require('../assets/images/Quincy.png'),
+      score: 450,
+    },
+    {
+      name: 'WINTHROP',
+      imageFile: require('../assets/images/Winthrop.png'),
+      score: 400,
+    },
+    {
+      name: 'LOWELL',
+      imageFile: require('../assets/images/Lowell.png'),
+      score: 350,
+    },
+    {
+      name: 'ELIOT',
+      imageFile: require('../assets/images/Eliot.png'),
+      score: 330,
+    },
+    {
+      name: 'MATHER',
+      imageFile: require('../assets/images/Mather.png'),
+      score: 300,
+    },
+    {
+      name: 'KIRKLAND',
+      imageFile: require('../assets/images/Kirkland.png'),
+      score: 250,
+    },
+    {
+      name: 'DUNSTER',
+      imageFile: require('../assets/images/Dunster.png'),
+      score: 230,
+    },
+    {
+      name: 'LEVERETT',
+      imageFile: require('../assets/images/Leverett.png'),
+      score: 200,
+    },
+    {
+      name: 'ADAMS',
+      imageFile: require('../assets/images/Adams.png'),
+      score: 150,
+    },
+    {
+      name: 'PFOHO',
+      imageFile: require('../assets/images/Pfoho.png'),
+      score: 100,
+    },
+    {
+      name: 'CABOT',
+      imageFile: require('../assets/images/Cabot.png'),
+      score: 50,
+    },
+    {
+      name: 'DUDLEY',
+      imageFile: require('../assets/images/Dudley.png'),
+      score: 30,
+    },
+    {
+      name: 'CRIMSON',
+      imageFile: require('../assets/images/Crimson.png'),
+      score: 20,
+    },
+    { name: 'ELM', imageFile: require('../assets/images/Elm.png'), score: 10 },
+    { name: 'IVY', imageFile: require('../assets/images/Ivy.png'), score: 5 },
+    { name: 'OAK', imageFile: require('../assets/images/Oak.png'), score: 0 },
   ];
 
   houses.sort((house1, house2) => house2.score - house1.score);
 
   const maxScore = Math.ceil(houses[0].score / 100) * 100;
 
-  const scoreLabels = Array.from([0, 1, 2, 3, 4, 5], (x) => x * (maxScore / 5));
+  const scoreLabels = Array.from([0, 1, 2, 3, 4, 5], x => x * (maxScore / 5));
 
-  const getPercent = (score) => {
+  const getPercent = score => {
     return 50 + 50.5 * (score / (maxScore / 5));
   };
 
-  const lineStyle = (index) => {
+  const lineStyle = index => {
     return {
       alignItems: 'center',
       position: 'absolute',
@@ -64,7 +117,7 @@ export default function CampusScreen() {
       <View
         style={{
           width: 2,
-          height: 100 * (houses.length),
+          height: 100 * houses.length,
           backgroundColor: '#E8E8E8',
         }}
       />
@@ -108,7 +161,6 @@ export default function CampusScreen() {
           alignItems: 'center',
           height: 100,
           width: 100,
-          right: 0,
         }}
       >
         <View
@@ -140,12 +192,11 @@ export default function CampusScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.initialText}>
-          <Text style={styles.titleText}>campus</Text>
-          <Text style={styles.subText}>TOTAL SCORE</Text>
+        <Text style={styles.titleText}>campus</Text>
+        <Text style={styles.subText}>TOTAL SCORE</Text>
       </View>
 
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        
         <View style={{ flex: 1 }}>
           {showScoreLabel}
           {displayHouses}
@@ -194,7 +245,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'center',
     marginTop: 20,
-    backgroundColor: "white"
+    backgroundColor: 'white',
   },
 
   titleText: {
@@ -204,8 +255,7 @@ const styles = StyleSheet.create({
     color: theme.colors.primary.oldSafe,
     fontFamily: theme.fonts.titles,
     letterSpacing: 3,
-        marginTop: 20,
-
+    marginTop: 20,
   },
   subText: {
     fontSize: 26,
@@ -226,7 +276,6 @@ const styles = StyleSheet.create({
   image: {
     width: 75,
     height: 75,
-    width: 75,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: 'white',
